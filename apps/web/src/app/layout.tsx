@@ -3,7 +3,7 @@ import ChatBot from '@/components/Chat/ChatBot';
 import './globals.css';
 import Link from 'next/link';
 import { Manrope, IBM_Plex_Mono } from 'next/font/google';
-import { ShieldAlert, Globe2, Activity, Database, Search } from 'lucide-react';
+import { ShieldAlert, Globe2, Activity, Database, Search, BarChart3 } from 'lucide-react';
 
 /* --- Google Font Optimization via next/font -----------------------------
    Loaded at build time, self-hosted, no CLS flash.
@@ -73,6 +73,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             >
               <Database className="w-4 h-4 text-emerald-400" />
               <span>Sources & Health</span>
+            </Link>
+            <Link
+              href="/analytics"
+              className="hidden rounded-lg px-3 py-2 text-slate-300 transition hover:bg-white/[0.07] hover:text-white lg:flex lg:items-center lg:space-x-1.5"
+            >
+              <BarChart3 className="w-4 h-4 text-[#7c9bb5]" />
+              <span>Analytics</span>
             </Link>
           </nav>
 
