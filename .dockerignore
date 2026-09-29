@@ -1,0 +1,9 @@
+﻿.venv
+node_modules
+.next
+__pycache__
+.git
+*.pyc
+.pytest_cache
+terraguard_dev.db
+apps/web/.next
