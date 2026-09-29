@@ -133,7 +133,7 @@ interface TierStyle {
 }
 
 const RISK_TIERS: TierStyle[] = [
-  { tier: 'low', label: 'Low', color: '#22d3ee', threshold: 0.25 },
+  { tier: 'low', label: 'Low', color: '#7c9bb5', threshold: 0.25 },
   { tier: 'moderate', label: 'Moderate', color: '#a3e635', threshold: 0.5 },
   { tier: 'severe', label: 'Severe', color: '#fbbf24', threshold: 0.75 },
   { tier: 'extreme', label: 'Extreme', color: '#fb7185', threshold: 1.01 },
@@ -461,13 +461,13 @@ function EarthGroup({ selectedCityName, showLabels, autoRotate, onSelectCity }: 
       {/* Structural shell */}
       <mesh>
         <sphereGeometry args={[EARTH_RADIUS * 1.012, 32, 32]} />
-        <meshBasicMaterial color="#22d3ee" wireframe transparent opacity={0.06} />
+        <meshBasicMaterial color="#8b7cf6" wireframe transparent opacity={0.06} />
       </mesh>
 
       {/* Graticule */}
       <group>
         {graticule.map(({ id, points }) => (
-          <Line key={id} points={points} color="#38bdf8" lineWidth={0.5} transparent opacity={0.16} />
+          <Line key={id} points={points} color="#8b7cf6" lineWidth={0.5} transparent opacity={0.16} />
         ))}
       </group>
 
@@ -486,7 +486,7 @@ function EarthGroup({ selectedCityName, showLabels, autoRotate, onSelectCity }: 
         <sphereGeometry args={[ATMOSPHERE_RADIUS, 48, 48]} />
         <meshStandardMaterial
           color="#082f49"
-          emissive="#38bdf8"
+          emissive="#8b7cf6"
           emissiveIntensity={0.35}
           transparent
           opacity={0.18}
@@ -540,8 +540,8 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
         <fog attach="fog" args={['#020617', 12, 26]} />
 
         <ambientLight intensity={0.35} />
-        <directionalLight position={[5, 3, 5]} intensity={1.4} color="#bae6fd" />
-        <pointLight position={[-5, -2, -4]} intensity={0.8} color="#22d3ee" />
+        <directionalLight position={[5, 3, 5]} intensity={1.4} color="#c4b5fd" />
+        <pointLight position={[-5, -2, -4]} intensity={0.8} color="#8b7cf6" />
 
         <Starfield />
         <EarthGroup

@@ -6,9 +6,9 @@
    DESIGN TOKENS
    ═══════════════════════════════════════════════════════════════════════════ */
 :root {
-  --bg-color: #060a12;
-  --card-bg: #101622;
-  --border-color: #202a3b;
+  --bg-color: #08080c;
+  --card-bg: #101017;
+  --border-color: #1c1c26;
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
 
@@ -33,9 +33,9 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 body {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56,189,248,.09), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 110%, rgba(139,92,246,.07), transparent 50%),
-    radial-gradient(ellipse 50% 50% at 10% 60%, rgba(16,185,129,.04), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139,124,246,.10), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 110%, rgba(124,155,181,.07), transparent 50%),
+    radial-gradient(ellipse 50% 50% at 10% 60%, rgba(74,222,128,.03), transparent 50%),
     var(--bg-color);
   background-attachment: fixed;
   color: var(--text-primary);
@@ -90,7 +90,7 @@ body::after {
   background: linear-gradient(135deg, rgba(17, 27, 45, .92), rgba(7, 11, 20, .94) 56%, rgba(13, 27, 43, .9));
   box-shadow:
     0 24px 80px rgba(0,0,0,0.25),
-    0 0 120px rgba(56,189,248,.04),
+    0 0 120px rgba(139,124,246,.06),
     inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
@@ -99,8 +99,8 @@ body::after {
   inset: 0;
   opacity: .38;
   background-image:
-    linear-gradient(rgba(164, 211, 255, .06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(164, 211, 255, .06) 1px, transparent 1px);
+    linear-gradient(rgba(167, 139, 250, .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 139, 250, .05) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: linear-gradient(90deg, black, transparent 76%);
 }
@@ -114,8 +114,8 @@ body::after {
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(56, 189, 248, 0.03) 49%,
-    rgba(56, 189, 248, 0.08) 50%,
+    rgba(139, 124, 246, 0.03) 49%,
+    rgba(139, 124, 246, 0.09) 50%,
     transparent 51%,
     transparent 100%
   );
@@ -130,8 +130,8 @@ body::after {
 
 /* Aurora accent blobs */
 .hero-aurora { position: absolute; border-radius: 999px; filter: blur(24px); pointer-events: none; }
-.hero-aurora-one { width: 28rem; height: 20rem; right: 8%; top: -20%; background: rgba(61, 156, 255, .14); }
-.hero-aurora-two { width: 18rem; height: 18rem; right: 30%; bottom: -40%; background: rgba(124, 92, 255, .13); }
+.hero-aurora-one { width: 28rem; height: 20rem; right: 8%; top: -20%; background: rgba(139, 124, 246, .15); }
+.hero-aurora-two { width: 18rem; height: 18rem; right: 30%; bottom: -40%; background: rgba(124, 155, 181, .12); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    PREMIUM BUTTONS
@@ -149,12 +149,12 @@ body::after {
 .premium-button:hover { transform: translateY(-1px); }
 
 .premium-button-primary {
-  color: #06101a;
-  background: linear-gradient(135deg, #baf1ff, #83d7f8);
-  box-shadow: 0 12px 30px rgba(64, 193, 245, .18);
+  color: #0b0a14;
+  background: linear-gradient(135deg, #c4b5fd, #8b7cf6);
+  box-shadow: 0 12px 30px rgba(139, 124, 246, .22);
 }
 .premium-button-primary:hover {
-  box-shadow: 0 16px 40px rgba(64, 193, 245, .28);
+  box-shadow: 0 16px 40px rgba(139, 124, 246, .30);
 }
 
 .premium-button-secondary {
@@ -188,23 +188,23 @@ body::after {
   border-radius: 50%;
   overflow: hidden;
   background: radial-gradient(circle at 32% 27%,
-    rgba(186,244,255,.65),
-    rgba(22, 87, 151,.45) 24%,
-    rgba(12, 32, 73,.92) 63%,
-    #07101f 75%
+    rgba(196,181,253,.55),
+    rgba(62, 54, 118,.48) 26%,
+    rgba(20, 17, 38,.94) 64%,
+    #0c0a15 76%
   );
   box-shadow:
     inset -35px -26px 50px rgba(0,0,0,.62),
-    inset 12px 8px 30px rgba(202,249,255,.16),
-    0 22px 80px rgba(35, 133, 255, .32),
-    0 0 60px rgba(56, 189, 248, .10);
+    inset 12px 8px 30px rgba(196,181,253,.16),
+    0 22px 80px rgba(139, 124, 246, .34),
+    0 0 60px rgba(124, 155, 181, .12);
   transition: transform .35s cubic-bezier(.2,.8,.2,1);
   animation: globe-float 8s ease-in-out infinite;
 }
 
 @keyframes globe-float {
-  0%, 100% { filter: drop-shadow(0 22px 80px rgba(35,133,255,.32)); }
-  50% { filter: drop-shadow(0 28px 90px rgba(35,133,255,.40)); }
+  0%, 100% { filter: drop-shadow(0 22px 80px rgba(139,124,246,.34)); }
+  50% { filter: drop-shadow(0 28px 90px rgba(139,124,246,.42)); }
 }
 
 .hero-globe::after {
@@ -212,16 +212,16 @@ body::after {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid rgba(196, 239, 255, .36);
-  box-shadow: inset 0 0 30px rgba(129,217,255,.22);
+  border: 1px solid rgba(167, 139, 250, .34);
+  box-shadow: inset 0 0 30px rgba(139,124,246,.24);
 }
 
 .hero-globe-grid {
   position: absolute;
   inset: -20%;
   background:
-    repeating-linear-gradient(0deg, transparent 0 23px, rgba(184,237,255,.2) 24px 25px),
-    repeating-linear-gradient(90deg, transparent 0 25px, rgba(184,237,255,.16) 26px 27px);
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(196,181,253,.20) 24px 25px),
+    repeating-linear-gradient(90deg, transparent 0 25px, rgba(167,139,250,.16) 26px 27px);
   transform: rotate(-13deg) skewY(10deg);
   opacity: .7;
 }
@@ -229,8 +229,8 @@ body::after {
 .hero-continent {
   position: absolute;
   filter: blur(1px);
-  background: linear-gradient(135deg, rgba(93, 253, 222,.68), rgba(63, 173, 219,.15));
-  box-shadow: 0 0 24px rgba(97,239,216,.28);
+  background: linear-gradient(135deg, rgba(196,181,253,.55), rgba(124,155,181,.16));
+  box-shadow: 0 0 24px rgba(139,124,246,.28);
 }
 .hero-continent-one {
   width: 34%; height: 19%; left: 22%; top: 31%;
@@ -264,7 +264,7 @@ body::after {
 /* Orbit rings */
 .hero-orbit {
   position: absolute;
-  border: 1px solid rgba(154,225,255,.24);
+  border: 1px solid rgba(139,124,246,.26);
   border-radius: 50%;
   left: 50%; top: 48%;
   transform-style: preserve-3d;
@@ -273,13 +273,13 @@ body::after {
 .hero-orbit-large {
   width: 380px; height: 145px;
   transform: translate(-50%,-50%) rotateX(67deg) rotateZ(-16deg);
-  box-shadow: 0 0 30px rgba(74,173,255,.1);
+  box-shadow: 0 0 30px rgba(124,155,181,.12);
   animation: orbit-pulse 4s ease-in-out infinite;
 }
 .hero-orbit-small {
   width: 334px; height: 126px;
   transform: translate(-50%,-50%) rotateX(67deg) rotateZ(55deg);
-  border-color: rgba(174,129,255,.2);
+  border-color: rgba(124,155,181,.20);
   animation: orbit-pulse 4s ease-in-out infinite 1s;
 }
 
@@ -322,7 +322,7 @@ body::after {
 .hero-skeleton-circle {
   width: 200px; height: 200px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(56,189,248,.08), rgba(139,92,246,.06));
+  background: linear-gradient(135deg, rgba(139,124,246,.10), rgba(124,155,181,.06));
   animation: skeleton-pulse 1.8s ease-in-out infinite;
 }
 .hero-skeleton-label {
@@ -391,7 +391,7 @@ body::after {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--angle), transparent 40%, rgba(78,218,255,.3) 50%, transparent 60%);
+  background: conic-gradient(from var(--angle), transparent 40%, rgba(139,124,246,.32) 50%, transparent 60%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -425,7 +425,8 @@ body::after {
   50% { opacity: .20; }
 }
 
-.intelligence-card-cyan::after  { background: #4edaff; }
+.intelligence-card-cyan::after   { background: #8b7cf6; }
+.intelligence-card-violet::after { background: #8b7cf6; }
 .intelligence-card-amber::after { background: #fbbf75; }
 .intelligence-card-rose::after  { background: #fb7185; }
 
@@ -437,7 +438,8 @@ body::after {
   border-radius: .8rem;
   border: 1px solid currentColor;
 }
-.intelligence-card-icon-cyan    { color: #8ee9ff; background: rgba(83,208,255,.1); }
+.intelligence-card-icon-cyan     { color: #c4b5fd; background: rgba(139,124,246,.1); }
+.intelligence-card-icon-violet  { color: #c4b5fd; background: rgba(139,124,246,.1); }
 .intelligence-card-icon-amber   { color: #fdd38b; background: rgba(255,186,82,.1); }
 .intelligence-card-icon-rose    { color: #fda4af; background: rgba(251,113,133,.1); }
 .intelligence-card-icon-emerald { color: #8af0c9; background: rgba(74,222,128,.1); }
@@ -491,7 +493,7 @@ body::after {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--angle), transparent 35%, var(--card-accent, rgba(78,218,255,.25)) 50%, transparent 65%);
+  background: conic-gradient(from var(--angle), transparent 35%, var(--card-accent, rgba(139,124,246,.25)) 50%, transparent 65%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -513,7 +515,7 @@ body::after {
   border-radius: 50%;
   filter: blur(14px);
   opacity: .07;
-  background: var(--card-accent, #4edaff);
+  background: var(--card-accent, #8b7cf6);
   transition: opacity .3s ease;
 }
 .feature-card:hover::after { opacity: .14; }
@@ -557,9 +559,9 @@ body::after {
    HAZARD BADGES
    ═══════════════════════════════════════════════════════════════════════════ */
 .badge-observed {
-  background: rgba(0, 240, 255, 0.15);
-  color: #00F0FF;
-  border: 1px solid rgba(0, 240, 255, 0.4);
+  background: rgba(124, 155, 181, 0.16);
+  color: #7c9bb5;
+  border: 1px solid rgba(124, 155, 181, 0.45);
 }
 
 .badge-forecast {
@@ -591,12 +593,12 @@ body::after {
    CUSTOM SCROLLBAR
    ═══════════════════════════════════════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #080c14; }
+::-webkit-scrollbar-track { background: #08080c; }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #1E293B, #334155);
+  background: linear-gradient(180deg, #1c1c26, #2b2b38);
   border-radius: 3px;
 }
-::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #334155, #475569); }
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #2b2b38, #3d3d4c); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    RESPONSIVE

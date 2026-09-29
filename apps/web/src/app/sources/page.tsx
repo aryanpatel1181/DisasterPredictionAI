@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { Database, CheckCircle, AlertTriangle, RefreshCw, Server, Activity } from 'lucide-react';
@@ -45,7 +45,7 @@ export default function SourcesHealthPage() {
           disabled={loading}
           className='px-3.5 py-1.5 rounded-lg bg-dark-bg text-slate-300 border border-slate-700 hover:text-white hover:border-slate-600 transition flex items-center space-x-2 text-xs font-mono'
         >
-          <RefreshCw className={loading ? 'w-3.5 h-3.5 text-cyan-400 animate-spin' : 'w-3.5 h-3.5 text-cyan-400'} />
+          <RefreshCw className={loading ? 'w-3.5 h-3.5 text-violet-400 animate-spin' : 'w-3.5 h-3.5 text-violet-400'} />
           <span>REFRESH METRICS</span>
         </button>
       </div>
@@ -67,7 +67,7 @@ export default function SourcesHealthPage() {
               <div>
                 <div className='flex items-center justify-between mb-3'>
                   <span className='font-mono text-sm font-bold text-slate-100 flex items-center space-x-2'>
-                    <Server className='w-4 h-4 text-cyan-400' />
+                    <Server className='w-4 h-4 text-violet-400' />
                     <span>{src.provider_name}</span>
                   </span>
 
@@ -81,7 +81,7 @@ export default function SourcesHealthPage() {
                 <div className='space-y-2 text-xs font-mono text-slate-400 my-4 bg-dark-bg/80 p-3 rounded-lg border border-slate-800'>
                   <div className='flex justify-between'>
                     <span>Average Latency:</span>
-                    <span className='text-cyan-400 font-bold'>{src.latency_ms} ms</span>
+                    <span className='text-violet-300 font-bold'>{src.latency_ms} ms</span>
                   </div>
                   <div className='flex justify-between'>
                     <span>Failure Count:</span>

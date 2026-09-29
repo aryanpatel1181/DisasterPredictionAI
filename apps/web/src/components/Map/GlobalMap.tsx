@@ -46,7 +46,7 @@ export default function GlobalMap({ events, selectedEventId, onSelectEvent }: Gl
       {/* Layer Control Bar */}
       <div className="absolute top-4 left-4 z-20 glass-panel p-2.5 rounded-lg flex flex-wrap items-center gap-2 border border-slate-700/60 shadow-xl">
         <span className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider flex items-center space-x-1 mr-1">
-          <Layers className="w-3.5 h-3.5 text-cyan-400" />
+          <Layers className="w-3.5 h-3.5 text-violet-400" />
           <span>LAYERS:</span>
         </span>
 
@@ -66,11 +66,11 @@ export default function GlobalMap({ events, selectedEventId, onSelectEvent }: Gl
           onClick={() => toggleLayer('flood')}
           className={`px-2.5 py-1 rounded text-xs font-medium transition flex items-center space-x-1.5 ${
             activeLayers.flood
-              ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50'
+              ? 'bg-violet-500/20 text-violet-300 border border-violet-500/50'
               : 'bg-dark-bg/60 text-slate-400 border border-slate-700'
           }`}
         >
-          <CloudRain className="w-3 h-3 text-cyan-400" />
+          <CloudRain className="w-3 h-3 text-violet-400" />
           <span>Flood</span>
         </button>
 
@@ -116,11 +116,14 @@ export default function GlobalMap({ events, selectedEventId, onSelectEvent }: Gl
         <div className="font-mono text-slate-400 font-semibold mb-1.5">DATA STATUS CLASSIFICATION</div>
         <div className="grid grid-cols-2 gap-2">
           <div className="flex items-center space-x-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block shadow-sm shadow-cyan-400" />
+            <span className="w-2.5 h-2.5 rounded-full bg-violet-400 inline-block shadow-sm shadow-violet-400" />
             <span className="text-slate-200">OBSERVED</span>
           </div>
           <div className="flex items-center space-x-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block shadow-sm shadow-purple-400" />
+            <span
+              className="w-2.5 h-2.5 rounded-full inline-block shadow-sm"
+              style={{ backgroundColor: '#7c9bb5', boxShadow: '0 0 6px rgba(124,155,181,.55)' }}
+            />
             <span className="text-slate-200">FORECAST</span>
           </div>
           <div className="flex items-center space-x-1.5">
@@ -157,7 +160,7 @@ export default function GlobalMap({ events, selectedEventId, onSelectEvent }: Gl
             const yPct = ((90 - evt.latitude) / 180) * 100;
             const isSelected = selectedEventId === evt.event_id;
 
-            let colorClass = 'bg-cyan-400 border-cyan-200';
+            let colorClass = 'bg-violet-400 border-violet-200';
             if (evt.status === 'OFFICIAL_WARNING' || evt.severity === 'CRITICAL') {
               colorClass = 'bg-red-500 border-red-300 shadow-red-500/50 animate-bounce';
             } else if (evt.hazard_type === 'earthquake') {
@@ -184,7 +187,7 @@ export default function GlobalMap({ events, selectedEventId, onSelectEvent }: Gl
                 {/* Hover Popover preview */}
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block w-48 glass-panel p-2 rounded text-left z-40 pointer-events-none shadow-2xl border border-slate-700">
                   <div className="font-bold text-xs text-white truncate">{evt.country || 'Global'}</div>
-                  <div className="text-[10px] text-cyan-400 font-mono capitalize">{evt.hazard_type} • Risk: {intPct(evt.risk_probability)}%</div>
+                  <div className="text-[10px] text-violet-400 font-mono capitalize">{evt.hazard_type} • Risk: {intPct(evt.risk_probability)}%</div>
                   <div className="text-[10px] text-slate-300 truncate">{evt.nearest_populated_location}</div>
                 </div>
               </button>

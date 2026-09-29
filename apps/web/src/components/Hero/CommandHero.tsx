@@ -213,10 +213,10 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
         {/* ── Left: Headline & CTA ──────────────────────────────────────── */}
         <div className="max-w-2xl">
           {/* Shimmer badge */}
-          <div className="badge-shimmer inline-flex items-center gap-2 rounded-full border border-cyan-300/15 bg-cyan-300/[0.07] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-100/90">
+          <div className="badge-shimmer inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200/90">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-300 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-200" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-300 opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-violet-200" />
             </span>
             Global intelligence network
           </div>
@@ -226,7 +226,7 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
             style={{ fontSize: 'var(--heading-hero)' }}
           >
             See the signal{' '}
-            <span className="bg-gradient-to-r from-cyan-200 via-sky-300 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-200 via-violet-400 to-indigo-500 bg-clip-text text-transparent">
               before
             </span>{' '}
             it becomes a disaster.
@@ -267,10 +267,10 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
           {/* Floating HUD — "Live Watch" */}
           <div className="absolute left-[7%] top-[13%] z-20 rounded-2xl border border-white/10 bg-slate-950/55 px-4 py-3 shadow-2xl backdrop-blur-xl">
             <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-slate-400">
-              <Radio className="h-3.5 w-3.5 text-cyan-300" /> Live watch
+              <Radio className="h-3.5 w-3.5 text-violet-300" /> Live watch
             </div>
             <p className="mt-1.5 text-sm font-medium text-white">Oceanic pressure</p>
-            <p className="mt-1 text-xs text-cyan-200">Streaming normally</p>
+            <p className="mt-1 text-xs text-violet-200">Streaming normally</p>
           </div>
 
           {/* CSS 3D Globe */}
@@ -326,7 +326,7 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
 function HeroMetric({
   label,
   value,
-  accent = 'text-cyan-100',
+  accent = 'text-violet-200',
   isText = false,
 }: {
   label: string;

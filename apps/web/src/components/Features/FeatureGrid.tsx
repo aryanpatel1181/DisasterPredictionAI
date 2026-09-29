@@ -33,7 +33,7 @@ const features = [
     description:
       'Multi-horizon probabilistic inundation risk powered by GloFAS river discharge, NASA GPM precipitation, and XGBoost ensemble models.',
     Icon: Waves,
-    accent: '#38bdf8',
+    accent: '#7c9bb5',
   },
   {
     title: 'Cyclone Tracking',
@@ -95,7 +95,7 @@ export default function FeatureGrid() {
       className={`section-reveal ${revealed ? 'revealed' : ''}`}
     >
       <div className="mb-6">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-cyan-300">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-violet-300">
           Capabilities
         </p>
         <h2

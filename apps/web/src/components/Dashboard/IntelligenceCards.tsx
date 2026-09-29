@@ -19,7 +19,7 @@ interface IntelligenceCardsProps {
 }
 
 const cards = [
-  { key: 'activeHazards', label: 'Active signals', detail: 'Across 5 hazard categories', icon: Activity, color: 'cyan' },
+  { key: 'activeHazards', label: 'Active signals', detail: 'Across 5 hazard categories', icon: Activity, color: 'violet' },
   { key: 'highRiskEvents', label: 'Elevated risk', detail: 'Above 70% calibrated probability', icon: AlertTriangle, color: 'amber' },
   { key: 'officialWarnings', label: 'Official warnings', detail: 'Verified agency advisories', icon: ShieldAlert, color: 'rose' },
 ] as const;

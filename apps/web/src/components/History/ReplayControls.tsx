@@ -19,7 +19,7 @@ export default function ReplayControls({ onTimestampChange }: ReplayControlsProp
       <div className="flex items-center space-x-3 w-full md:w-auto">
         <button
           onClick={togglePlay}
-          className="p-2 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 hover:bg-cyan-500/30 transition shadow-lg shadow-cyan-500/10"
+          className="p-2 rounded-lg bg-violet-500/20 text-violet-400 border border-violet-500/50 hover:bg-violet-500/30 transition shadow-lg shadow-violet-500/10"
         >
           {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
         </button>
@@ -47,9 +47,9 @@ export default function ReplayControls({ onTimestampChange }: ReplayControlsProp
           max="100"
           value={sliderValue}
           onChange={e => setSliderValue(Number(e.target.value))}
-          className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+          className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-violet-400"
         />
-        <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase">PRESENT</span>
+        <span className="text-[10px] font-mono text-violet-400 font-bold uppercase">PRESENT</span>
       </div>
 
       {/* Zero Leakage Indicator */}

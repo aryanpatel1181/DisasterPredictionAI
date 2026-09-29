@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from packages.shared.config import settings
 from packages.shared.logging import get_logger
 from apps.api.database import init_db
-from apps.api.routers import health, sources, events, hazards, location, alerts, models, history, predictions, chat
+from apps.api.routers import health, sources, events, hazards, location, alerts, models, history, predictions, chat, analytics
 from apps.api.routers.events import get_or_refresh_events
 
 logger = get_logger("api_main")
@@ -49,6 +49,8 @@ app.include_router(models.router)
 app.include_router(history.router)
 app.include_router(predictions.router)
 app.include_router(chat.router)
+app.include_router(analytics.router)
+
 class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
@@ -96,3 +98,4 @@ async def websocket_events_endpoint(websocket: WebSocket):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("apps.api.main:app", host=settings.HOST, port=settings.PORT, reload=True)
+

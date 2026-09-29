@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { MessageSquare, Send, X, Loader2 } from 'lucide-react';
+import { trackEvent } from '@/hooks/useAnalytics';
 
 interface Message {
   role: 'user' | 'bot';
@@ -74,7 +75,11 @@ export default function ChatBot() {
   return (
     <>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+              const next = !isOpen;
+              setIsOpen(next);
+              if (next) trackEvent('/chatbot/open');
+            }}
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-gradient-to-tr from-violet-400 to-indigo-600 px-5 py-3 shadow-lg shadow-violet-500/25 transition-transform hover:scale-105 active:scale-95"
       >
         <MessageSquare className="h-5 w-5 text-slate-950" />
@@ -151,7 +156,7 @@ export default function ChatBot() {
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSend()}
               placeholder="Ask anything..."
-              className="flex-1 rounded-lg bg-white/[0.05] border border-white/[0.08] px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-cyan-300/40 focus:ring-1 focus:ring-cyan-300/20 transition"
+              className="flex-1 rounded-lg bg-white/[0.05] border border-white/[0.08] px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-violet-300/40 focus:ring-1 focus:ring-violet-300/20 transition"
             />
             <button
               onClick={() => handleSend()}

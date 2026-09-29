@@ -8,8 +8,11 @@ import ReplayControls from '@/components/History/ReplayControls';
 import CommandHero from '@/components/Hero/CommandHero';
 import IntelligenceCards from '@/components/Dashboard/IntelligenceCards';
 import FeatureGrid from '@/components/Features/FeatureGrid';
+import { usePageView, trackEvent } from '@/hooks/useAnalytics';
 
 export default function CommandCenterPage() {
+  usePageView();
+
   const [events, setEvents] = useState<any[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -74,7 +77,7 @@ export default function CommandCenterPage() {
       >
         <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-cyan-300">Decision workspace</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-violet-300">Decision workspace</p>
             <h2
               className="mt-1 font-display font-semibold tracking-[-0.04em] text-white"
               style={{ fontSize: 'var(--heading-section)' }}
@@ -89,7 +92,10 @@ export default function CommandCenterPage() {
         <div className="lg:col-span-8 flex flex-col space-y-4">
           <div className="flex-1 min-h-[500px]">
             <ThreeGlobe
-              onSelectCity={city => setSelectedCity(city)}
+              onSelectCity={city => {
+                setSelectedCity(city);
+                trackEvent('/globe/city/' + encodeURIComponent(city.name));
+              }}
               selectedCityName={selectedCity?.name ?? null}
             />
           </div>
@@ -109,10 +115,10 @@ export default function CommandCenterPage() {
       {/* City Selection Panel */}
       {selectedCity && (
         <div className="fixed bottom-6 left-6 z-40 glass-panel-elevated rounded-xl px-4 py-3 border border-white/[0.10] shadow-xl">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-cyan-300 mb-1">Selected City</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-violet-300 mb-1">Selected City</p>
           <p className="text-base font-semibold text-white font-display">{selectedCity.name}</p>
           {selectedCity.risk != null && (
-            <p className="text-sm font-mono text-cyan-300 mt-1">Risk Factor: {(selectedCity.risk * 100).toFixed(0)}%</p>
+            <p className="text-sm font-mono text-violet-300 mt-1">Risk Factor: {(selectedCity.risk * 100).toFixed(0)}%</p>
           )}
         </div>
       )}
