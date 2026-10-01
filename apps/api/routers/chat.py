@@ -5,8 +5,11 @@ import httpx
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
+from apps.api.routers.events import get_or_refresh_events
+
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-DEFAULT_MODEL = "openai/gpt-4o-mini"
+# Prefer a free OpenRouter model by default to avoid paid API usage.
+DEFAULT_MODEL = "deepseek/deepseek-r1:free"
 
 ADVISORY = (
     "Experimental decision-support output. TerraGuard AI is not a substitute for "
@@ -83,8 +86,61 @@ def build_risk_context(message: str) -> dict:
     }
 
 
-def rule_based_reply(message: str) -> str:
+async def build_event_context(message: str) -> str:
+    """Summarize recent live hazard events that are relevant to a user question."""
+    text = message.lower()
+    hazard_types = detect_hazards(message)
+    if not hazard_types:
+        return ""
+
+    try:
+        events = await get_or_refresh_events()
+    except Exception:
+        return ""
+
+    relevant_events = []
+    for event in events:
+        event_hazard = event.hazard_type.value
+        if event_hazard not in hazard_types:
+            continue
+
+        location_pool = " ".join(
+            part for part in [event.country, event.admin_region, event.nearest_populated_location] if part
+        ).lower()
+        if any(keyword in text for keyword in ["recent", "today", "this week", "how did", "what caused"]):
+            pass
+
+        if any(term in text for term in ["nepal", "kathmandu", "himalaya", "india", "asia", "global"]):
+            if any(term in location_pool for term in ["nepal", "kathmandu", "asia", "india", "himalaya"]):
+                relevant_events.append(event)
+            elif "nepal" in text and not relevant_events:
+                relevant_events.append(event)
+        else:
+            relevant_events.append(event)
+
+    if not relevant_events:
+        return ""
+
+    compact = []
+    for event in relevant_events[:3]:
+        location = event.nearest_populated_location or event.country or "global area"
+        summary = event.explanation.human_summary if getattr(event, "explanation", None) else "Live hazard signal reported."
+        compact.append(
+            f"{event.hazard_type.value.upper()} in {location}: {summary}"
+        )
+
+    return "Relevant live hazard context: " + " | ".join(compact)
+
+
+def rule_based_reply(message: str, event_context: str = "") -> str:
     message_lower = message.lower()
+
+    if event_context and ("recent" in message_lower or "how did" in message_lower or "what caused" in message_lower or "why" in message_lower):
+        return (
+            f"I checked the live hazard feed. {event_context} "
+            "In general, floods often occur when intense rainfall exceeds drainage capacity, rivers overflow, or drainage systems are overwhelmed by saturated ground and runoff. "
+            "The most important thing is to verify the local official warning and avoid flooded roads, riverbanks, and low-lying areas."
+        )
 
     if "earthquake" in message_lower:
         return (
@@ -107,7 +163,7 @@ def rule_based_reply(message: str) -> str:
         return (
             "Flooding can occur from heavy rainfall, storm surge, or overflowing rivers. "
             "Low-lying areas and regions near water bodies are most vulnerable. "
-            "Avoid walking or driving through flood waters, and have an evacuation plan."
+            "If a flood is ongoing, move to higher ground, avoid driving through water, and stay informed through local official alerts."
         )
     if "wildfire" in message_lower or "forest fire" in message_lower:
         return (
@@ -151,15 +207,20 @@ def rule_based_reply(message: str) -> str:
     )
 
 
-async def ask_openrouter(message: str, history: list) -> str | None:
+async def ask_openrouter(message: str, history: list, event_context: str = "") -> str | None:
     key = os.getenv("OPENROUTER_API_KEY")
     if not key:
         return None
 
     model = os.getenv("OPENROUTER_MODEL", DEFAULT_MODEL)
+    contextual_message = message
+    if event_context:
+        contextual_message = (
+            f"{message}\n\nLive hazard context from the project feed:\n{event_context}"
+        )
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
     messages.extend(history)
-    messages.append({"role": "user", "content": message})
+    messages.append({"role": "user", "content": contextual_message})
 
     headers = {
         "Authorization": f"Bearer {key}",
@@ -197,12 +258,13 @@ async def chat(request: ChatRequest) -> ChatResponse:
             }
         )
 
-    text = await ask_openrouter(request.message, history)
+    event_context = await build_event_context(request.message)
+    text = await ask_openrouter(request.message, history, event_context)
     if text:
         model = os.getenv("OPENROUTER_MODEL", DEFAULT_MODEL)
         sources = [f"OpenRouter LLM ({model})"]
     else:
-        text = rule_based_reply(request.message)
+        text = rule_based_reply(request.message, event_context)
         sources = ["TerraGuard AI Knowledge Base"]
 
     return ChatResponse(

@@ -27,7 +27,7 @@
                                        |
                                        v
                      +-----------------------------------+
-                     |   services/risk-engine & ML       |
+                     |   services/risk_engine & ML       |
                      | Models | Calibration | SHAP Engine|
                      +-----------------+-----------------+
                                        |

@@ -31,11 +31,11 @@ export default function SourcesHealthPage() {
       {/* Header */}
       <div className='flex items-center justify-between'>
         <div>
-          <h1 className='text-2xl font-extrabold text-white flex items-center space-x-2'>
-            <Database className='w-6 h-6 text-emerald-400' />
+          <h1 className='text-2xl font-extrabold text-content-primary flex items-center space-x-2'>
+            <Database className='w-6 h-6 text-status-ok' />
             <span>Data Ingestion Adapters & Source Health</span>
           </h1>
-          <p className='text-xs text-slate-400 mt-1 font-mono'>
+          <p className='text-xs text-content-secondary mt-1 font-mono'>
             Real-time status monitoring, retry counts, response latency, and circuit breaker metrics across all external telemetry providers.
           </p>
         </div>
@@ -43,9 +43,9 @@ export default function SourcesHealthPage() {
         <button
           onClick={fetchSources}
           disabled={loading}
-          className='px-3.5 py-1.5 rounded-lg bg-dark-bg text-slate-300 border border-slate-700 hover:text-white hover:border-slate-600 transition flex items-center space-x-2 text-xs font-mono'
+          className='px-3.5 py-1.5 rounded-lg bg-ink-bg text-content-secondary border border-ink-border-strong hover:text-content-primary hover:border-content-faint transition flex items-center space-x-2 text-xs font-mono'
         >
-          <RefreshCw className={loading ? 'w-3.5 h-3.5 text-violet-400 animate-spin' : 'w-3.5 h-3.5 text-violet-400'} />
+          <RefreshCw className={loading ? 'w-3.5 h-3.5 text-accent-bright animate-spin' : 'w-3.5 h-3.5 text-accent-bright'} />
           <span>REFRESH METRICS</span>
         </button>
       </div>
@@ -57,17 +57,17 @@ export default function SourcesHealthPage() {
           const isMock = src.is_mock_fallback || src.status === 'DEV_MOCK';
 
           const statusClass = isHealthy
-            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50'
+            ? 'bg-status-ok/20 text-status-ok border border-status-ok/50'
             : isMock
-            ? 'bg-purple-500/20 text-purple-300 border border-purple-500/50'
-            : 'bg-red-500/20 text-red-400 border border-red-500/50';
+            ? 'bg-status-warning/20 text-status-warning border border-status-warning/50'
+            : 'bg-status-critical/20 text-status-critical border border-status-critical/50';
 
           return (
-            <div key={src.provider_name} className='glass-panel p-5 rounded-xl border border-dark-border flex flex-col justify-between shadow-xl'>
+            <div key={src.provider_name} className='glass-panel p-5 rounded-md border border-dark-border flex flex-col justify-between shadow-raised'>
               <div>
                 <div className='flex items-center justify-between mb-3'>
-                  <span className='font-mono text-sm font-bold text-slate-100 flex items-center space-x-2'>
-                    <Server className='w-4 h-4 text-violet-400' />
+                  <span className='font-mono text-sm font-bold text-content-primary flex items-center space-x-2'>
+                    <Server className='w-4 h-4 text-accent-bright' />
                     <span>{src.provider_name}</span>
                   </span>
 
@@ -78,31 +78,31 @@ export default function SourcesHealthPage() {
                   </span>
                 </div>
 
-                <div className='space-y-2 text-xs font-mono text-slate-400 my-4 bg-dark-bg/80 p-3 rounded-lg border border-slate-800'>
+                <div className='space-y-2 text-xs font-mono text-content-secondary my-4 bg-ink-bg/80 p-3 rounded-lg border border-ink-border'>
                   <div className='flex justify-between'>
                     <span>Average Latency:</span>
-                    <span className='text-violet-300 font-bold'>{src.latency_ms} ms</span>
+                    <span className='text-accent-bright font-bold'>{src.latency_ms} ms</span>
                   </div>
                   <div className='flex justify-between'>
                     <span>Failure Count:</span>
-                    <span className={src.failure_count > 0 ? 'text-amber-400 font-bold' : 'text-slate-300'}>
+                    <span className={src.failure_count > 0 ? 'text-status-warning font-bold' : 'text-content-secondary'}>
                       {src.failure_count}
                     </span>
                   </div>
                   <div className='flex justify-between'>
                     <span>Records Ingested:</span>
-                    <span className='text-slate-200'>{src.records_ingested || 45}</span>
+                    <span className='text-content-primary'>{src.records_ingested || 45}</span>
                   </div>
                   <div className='flex justify-between'>
                     <span>Dev/Mock Fallback:</span>
-                    <span className={isMock ? 'text-purple-400 font-bold' : 'text-slate-400'}>
+                    <span className={isMock ? 'text-status-warning font-bold' : 'text-content-tertiary'}>
                       {isMock ? 'ACTIVE (Offline Safe)' : 'DISABLED (Live)'}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className='pt-3 border-t border-slate-800 text-[10px] font-mono text-slate-500 flex items-center justify-between'>
+              <div className='pt-3 border-t border-ink-border text-[10px] font-mono text-content-tertiary flex items-center justify-between'>
                 <span>Last Ingest:</span>
                 <span>{src.last_success_timestamp ? new Date(src.last_success_timestamp).toLocaleTimeString() : 'Just now'}</span>
               </div>

@@ -35,7 +35,7 @@ TerraGuard AI is structured as a high-performance monorepo:
 ├── services/
 │   ├── ingestion/       # Adapter network (USGS, GDACS, WMO/CAP, NASA GPM, GloFAS)
 │   ├── feature-engine/ # Geospatial & atmospheric feature processing pipeline
-│   ├── risk-engine/    # Probabilistic risk normalization & model execution
+│   ├── risk_engine/    # Probabilistic risk normalization & model execution
 │   ├── explanation-engine/ # Structured SHAP & deterministic explanation synthesis
 │   └── alert-engine/   # Official emergency warnings mapper (WMO CAP / GDACS)
 ├── ml/                  # Disaster specific ML models, pipelines & model registry

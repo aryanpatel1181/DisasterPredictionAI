@@ -42,29 +42,43 @@ export default function ChatBot() {
     setInput('');
     setLoading(true);
 
+    const activeConversationId = conversationId ?? crypto.randomUUID();
     if (!conversationId) {
-      setConversationId(crypto.randomUUID());
+      setConversationId(activeConversationId);
     }
 
     try {
-      const res = await fetch('http://localhost:8000/api/v1/chat', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const res = await fetch(`${apiUrl}/api/v1/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: text,
-          conversation_id: conversationId,
+          conversation_id: activeConversationId,
         }),
       });
+
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => ({}));
+        throw new Error(
+          errBody?.detail ? JSON.stringify(errBody.detail) : `Request failed with ${res.status}`
+        );
+      }
+
       const data: ChatResponse = await res.json();
       const botMsg: Message = { role: 'bot', content: data.response };
       setMessages(prev => [...prev, botMsg]);
       if (data.conversation_id) {
         setConversationId(data.conversation_id);
       }
-    } catch {
+    } catch (error) {
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : 'Sorry, I am unable to connect to the backend server.';
       const botMsg: Message = {
         role: 'bot',
-        content: 'Sorry, I am unable to connect to the backend server.',
+        content: `Sorry, the chat request failed: ${message}`,
       };
       setMessages(prev => [...prev, botMsg]);
     } finally {
@@ -80,26 +94,26 @@ export default function ChatBot() {
               setIsOpen(next);
               if (next) trackEvent('/chatbot/open');
             }}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-full bg-gradient-to-tr from-violet-400 to-indigo-600 px-5 py-3 shadow-lg shadow-violet-500/25 transition-transform hover:scale-105 active:scale-95"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded bg-gradient-to-tr from-accent-bright to-accent-deep px-5 py-3 shadow-raised transition-transform hover:scale-105 active:scale-95"
       >
-        <MessageSquare className="h-5 w-5 text-slate-950" />
-        <span className="text-sm font-semibold text-slate-950">Ask TerraGuard AI</span>
-        <span className="absolute inset-0 rounded-full animate-ping bg-violet-400/40" />
+        <MessageSquare className="h-5 w-5 text-ink-bg" />
+        <span className="text-sm font-semibold text-ink-bg">Ask TerraGuard AI</span>
+        <span className="absolute inset-0 rounded animate-ping bg-accent/40" />
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-20 right-6 z-50 flex flex-col w-[380px] max-w-[calc(100vw-2rem)] glass-panel-elevated rounded-2xl border border-white/[0.10] shadow-2xl shadow-black/40 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08]">
+        <div className="fixed bottom-20 right-6 z-50 flex flex-col w-[380px] max-w-[calc(100vw-2rem)] glass-panel-elevated rounded-lg border border-ink-border shadow-raised overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-ink-border">
             <div className="flex items-center gap-2">
               <div className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-ok opacity-75" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-status-ok" />
               </div>
-              <span className="text-sm font-semibold text-white">TerraGuard AI</span>
+              <span className="text-sm font-semibold text-content-primary">TerraGuard AI</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-lg p-1 text-slate-400 transition hover:bg-white/[0.07] hover:text-white"
+              className="rounded p-1 text-content-secondary transition hover:bg-ink-raised hover:text-content-primary"
             >
               <X className="h-4 w-4" />
             </button>
@@ -108,12 +122,12 @@ export default function ChatBot() {
           <div className="flex-1 overflow-y-auto max-h-[400px] p-4 space-y-3">
             {messages.length === 0 && !loading && (
               <div className="space-y-2">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-violet-300 mb-3">Quick questions</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-bright mb-3">Quick questions</p>
                 {QUICK_QUESTIONS.map((q) => (
                   <button
                     key={q}
                     onClick={() => handleSend(q)}
-                    className="block w-full text-left rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-slate-300 transition hover:border-violet-300/30 hover:bg-violet-300/[0.06] hover:text-white"
+                    className="block w-full text-left rounded border border-ink-border bg-ink-raised/50 px-3 py-2 text-sm text-content-secondary transition hover:border-accent/40 hover:bg-accent/[0.06] hover:text-content-primary"
                   >
                     {q}
                   </button>
@@ -127,10 +141,10 @@ export default function ChatBot() {
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-xl px-4 py-2.5 text-sm leading-relaxed ${
+                  className={`max-w-[80%] rounded-md px-4 py-2.5 text-sm leading-relaxed ${
                     msg.role === 'user'
-                      ? 'bg-gradient-to-br from-violet-500/80 to-indigo-600/80 text-white font-medium'
-                      : 'glass-panel text-slate-200'
+                      ? 'bg-gradient-to-br from-accent to-accent-deep text-content-primary font-medium'
+                      : 'glass-panel text-content-primary'
                   }`}
                 >
                   {msg.content}
@@ -140,28 +154,28 @@ export default function ChatBot() {
 
             {loading && (
               <div className="flex justify-start">
-                <div className="glass-panel rounded-xl px-4 py-3 flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 animate-spin text-violet-400" />
-                  <span className="text-sm text-slate-400 font-mono">Processing...</span>
+                <div className="glass-panel rounded-md px-4 py-3 flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin text-accent-bright" />
+                  <span className="text-sm text-content-secondary font-mono">Processing...</span>
                 </div>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="flex items-center gap-2 px-4 py-3 border-t border-white/[0.08]">
+          <div className="flex items-center gap-2 px-4 py-3 border-t border-ink-border">
             <input
               type="text"
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSend()}
               placeholder="Ask anything..."
-              className="flex-1 rounded-lg bg-white/[0.05] border border-white/[0.08] px-3 py-2 text-sm text-white placeholder-slate-500 outline-none focus:border-violet-300/40 focus:ring-1 focus:ring-violet-300/20 transition"
+              className="flex-1 rounded bg-ink-raised/50 border border-ink-border px-3 py-2 text-sm text-content-primary placeholder-content-tertiary outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20 transition"
             />
             <button
               onClick={() => handleSend()}
               disabled={!input.trim() || loading}
-              className="flex items-center justify-center rounded-lg bg-gradient-to-tr from-violet-400 to-indigo-600 px-3 py-2 text-sm font-medium text-slate-950 transition hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center justify-center rounded bg-gradient-to-tr from-accent-bright to-accent-deep px-3 py-2 text-sm font-medium text-ink-bg transition hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Send
             </button>

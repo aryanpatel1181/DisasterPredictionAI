@@ -35,3 +35,10 @@ def test_tsunami_keyword():
 def test_conversation_id_echo():
     r = client.post("/api/v1/chat", json={"message": "hello", "conversation_id": "abc-123"})
     assert r.json()["conversation_id"] == "abc-123"
+
+
+def test_specific_location_flood_question_mentions_nepal_and_recent_context():
+    r = client.post("/api/v1/chat", json={"message": "How did the flood happen in Nepal recently?"})
+    assert r.status_code == 200
+    text = r.json()["response"].lower()
+    assert "nepal" in text or "recent" in text or "flood" in text

@@ -44,22 +44,22 @@ function HourlyTrafficChart({ hours }: { hours: HourBucket[] }) {
   );
 
   return (
-    <div className='glass-panel p-5 rounded-xl border border-dark-border shadow-xl flex flex-col min-w-0'>
+    <div className='glass-panel p-5 rounded-md border border-dark-border shadow-raised flex flex-col min-w-0'>
       <div className='flex items-center justify-between mb-1'>
         <div className='flex items-center space-x-2'>
-          <Clock className='w-4 h-4 text-[#7c9bb5]' />
-          <span className='text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-300'>
+          <Clock className='w-4 h-4 text-status-info' />
+          <span className='text-[11px] font-semibold uppercase tracking-[0.1em] text-content-primary'>
             Views by Hour of Day
           </span>
         </div>
-        <span className='text-[10px] font-mono text-slate-500'>UTC | 7 day window</span>
+        <span className='text-[10px] font-mono text-content-tertiary'>UTC | 7 day window</span>
       </div>
 
       <div className='flex items-baseline gap-4 mb-4 flex-wrap'>
-        <span className='font-mono text-2xl font-bold text-white'>{formatCount(total)}</span>
-        <span className='text-[10px] font-mono text-slate-500'>TOTAL VIEWS</span>
+        <span className='font-mono text-2xl font-bold text-content-primary'>{formatCount(total)}</span>
+        <span className='text-[10px] font-mono text-content-tertiary'>TOTAL VIEWS</span>
         {peak && peak.views > 0 && (
-          <span className='text-[10px] font-mono text-[#7c9bb5] flex items-center space-x-1'>
+          <span className='text-[10px] font-mono text-status-info flex items-center space-x-1'>
             <TrendingUp className='w-3 h-3' />
             <span>
               PEAK {formatHourLabel(peak.hour)} | {formatCount(peak.views)}
@@ -82,10 +82,10 @@ function HourlyTrafficChart({ hours }: { hours: HourBucket[] }) {
                 className={
                   'w-full rounded-t-sm transition-all duration-300 ' +
                   (h.views === 0
-                    ? 'bg-white/[0.04] h-[2px]'
+                    ? 'bg-ink-raised h-[2px]'
                     : isPeak
-                      ? 'bg-gradient-to-t from-violet-600 to-[#7c9bb5] group-hover:from-violet-500 group-hover:to-[#9db8cf]'
-                      : 'bg-violet-500/50 group-hover:bg-violet-400/80')
+                      ? 'bg-gradient-to-t from-accent-deep to-accent-bright group-hover:from-accent group-hover:to-accent-bright'
+                      : 'bg-accent/40 group-hover:bg-accent/70')
                 }
                 style={h.views === 0 ? undefined : { height: Math.max(pct, 4) + '%' }}
               />
@@ -94,7 +94,7 @@ function HourlyTrafficChart({ hours }: { hours: HourBucket[] }) {
         })}
       </div>
 
-      <div className='flex justify-between mt-2 text-[9px] font-mono text-slate-600'>
+      <div className='flex justify-between mt-2 text-[9px] font-mono text-content-tertiary'>
         {hours.map(h => (
           <span key={h.hour} className='flex-1 text-center'>
             {h.hour % 6 === 0 ? formatHourLabel(h.hour) : ''}
@@ -107,19 +107,19 @@ function HourlyTrafficChart({ hours }: { hours: HourBucket[] }) {
 
 function ChartSkeleton() {
   return (
-    <div className='glass-panel p-5 rounded-xl border border-dark-border flex flex-col min-w-0 animate-pulse'>
+    <div className='glass-panel p-5 rounded-md border border-dark-border flex flex-col min-w-0 animate-pulse'>
       <div className='flex items-center space-x-2 mb-4'>
-        <div className='h-3.5 w-3.5 rounded bg-white/[0.06]' />
-        <div className='h-3 w-40 rounded bg-white/[0.06]' />
+        <div className='h-3.5 w-3.5 rounded bg-ink-raised' />
+        <div className='h-3 w-40 rounded bg-ink-raised' />
       </div>
-      <div className='h-8 w-24 rounded bg-white/[0.06] mb-4' />
+      <div className='h-8 w-24 rounded bg-ink-raised mb-4' />
       <div className='flex items-end gap-[2px] h-32 w-full'>
         {[
           18, 34, 26, 52, 41, 63, 30, 47, 22, 58, 35, 70, 44, 29, 55, 38, 66, 24, 49, 33, 61, 27, 43, 31,
         ].map((h, i) => (
           <div
             key={i}
-            className='flex-1 rounded-t-sm bg-white/[0.06]'
+            className='flex-1 rounded-t-sm bg-ink-raised'
             style={{ height: h + '%' }}
           />
         ))}
@@ -130,20 +130,20 @@ function ChartSkeleton() {
 
 function ChartError({ onRetry }: { onRetry: () => void }) {
   return (
-    <div className='glass-panel p-5 rounded-xl border border-amber-500/30 bg-amber-950/10 flex flex-col items-start justify-center gap-3 min-w-0'>
-      <div className='flex items-center space-x-2 text-amber-400'>
+    <div className='glass-panel p-5 rounded-md border border-status-warning/30 bg-status-warning/10 flex flex-col items-start justify-center gap-3 min-w-0'>
+      <div className='flex items-center space-x-2 text-status-warning'>
         <AlertTriangle className='w-4 h-4' />
         <span className='text-[11px] font-semibold uppercase tracking-[0.1em]'>
           Hourly Timeseries Unavailable
         </span>
       </div>
-      <p className='text-xs text-slate-400 font-mono'>
+      <p className='text-xs text-content-secondary font-mono'>
         The analytics service did not respond. Traffic distribution will resume once the API is
         reachable.
       </p>
       <button
         onClick={onRetry}
-        className='px-3 py-1.5 rounded-lg bg-dark-bg text-slate-300 border border-slate-700 hover:text-white hover:border-slate-600 transition text-[10px] font-mono'
+        className='px-3 py-1.5 rounded-lg bg-ink-bg text-content-secondary border border-ink-border-strong hover:text-content-primary hover:border-content-faint transition text-[10px] font-mono'
       >
         RETRY FETCH
       </button>
@@ -180,11 +180,11 @@ export default function AnalyticsDashboardPage() {
       {/* Header */}
       <div className='flex items-start justify-between gap-4 flex-col md:flex-row md:items-center'>
         <div>
-          <h1 className='text-2xl font-extrabold text-white flex items-center space-x-2'>
-            <BarChart3 className='w-6 h-6 text-violet-400' />
+          <h1 className='text-2xl font-extrabold text-content-primary flex items-center space-x-2'>
+            <BarChart3 className='w-6 h-6 text-accent-bright' />
             <span>Site Footfall Intelligence</span>
           </h1>
-          <p className='text-xs text-slate-400 mt-1 max-w-2xl font-mono'>
+          <p className='text-xs text-content-secondary mt-1 max-w-2xl font-mono'>
             Traffic analytics aggregated from the TerraGuard web telemetry pipeline. Live page views,
             session distribution, referrer attribution, and diurnal usage patterns.
           </p>
@@ -192,9 +192,9 @@ export default function AnalyticsDashboardPage() {
 
         <Link
           href='/'
-          className='px-3.5 py-1.5 rounded-lg bg-dark-bg text-slate-300 border border-slate-700 hover:text-white hover:border-slate-600 transition flex items-center space-x-2 text-xs font-mono shrink-0'
+          className='px-3.5 py-1.5 rounded-lg bg-ink-bg text-content-secondary border border-ink-border-strong hover:text-content-primary hover:border-content-faint transition flex items-center space-x-2 text-xs font-mono shrink-0'
         >
-          <ArrowLeft className='w-3.5 h-3.5 text-violet-400' />
+          <ArrowLeft className='w-3.5 h-3.5 text-accent-bright' />
           <span>BACK TO COMMAND CENTER</span>
         </Link>
       </div>
@@ -216,11 +216,11 @@ export default function AnalyticsDashboardPage() {
         </div>
       </div>
 
-      <div className='flex items-center space-x-2 text-[10px] font-mono text-slate-600'>
+      <div className='flex items-center space-x-2 text-[10px] font-mono text-content-tertiary'>
         {loading ? (
-          <Loader2 className='w-3 h-3 animate-spin text-violet-400' />
+          <Loader2 className='w-3 h-3 animate-spin text-accent-bright' />
         ) : (
-          <span className='inline-block h-1.5 w-1.5 rounded-full bg-emerald-400' />
+          <span className='inline-block h-1.5 w-1.5 rounded-full bg-status-ok' />
         )}
         <span>
           {loading

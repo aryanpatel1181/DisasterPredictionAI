@@ -32,6 +32,6 @@ class Settings(BaseSettings):
     MODEL_REGISTRY_PATH: str = "./ml/registry"
 
     OPENROUTER_API_KEY: str = ""
-    OPENROUTER_MODEL: str = "openai/gpt-4o-mini"
+    OPENROUTER_MODEL: str = "deepseek/deepseek-r1:free"
 
 settings = Settings()

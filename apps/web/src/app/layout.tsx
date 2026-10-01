@@ -35,19 +35,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`dark ${manrope.variable} ${ibmPlexMono.variable}`}
     >
-      <body className="bg-dark-bg text-slate-100 min-h-screen flex flex-col antialiased font-sans">
+      <body className="bg-ink-bg text-content-primary min-h-screen flex flex-col antialiased font-sans">
         {/* Navigation Command Header */}
-        <header className="sticky top-0 z-50 mx-3 mt-3 flex h-16 items-center justify-between rounded-2xl border border-white/[0.09] bg-[#0c121e]/75 px-4 shadow-2xl shadow-black/20 backdrop-blur-xl md:mx-6 md:px-5">
+        <header className="sticky top-0 z-50 mx-3 mt-3 flex h-16 items-center justify-between rounded-lg border border-ink-border bg-ink-surface/75 px-4 shadow-raised backdrop-blur-xl md:mx-6 md:px-5">
           <div className="flex items-center space-x-3">
             <Link href="/" className="flex items-center space-x-2 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-violet-400 to-indigo-600 shadow-lg shadow-violet-500/20 transition-transform group-hover:scale-105">
-                <Globe2 className="h-5 w-5 text-slate-950" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-tr from-accent-bright to-accent-deep shadow-card transition-transform group-hover:scale-105">
+                <Globe2 className="h-5 w-5 text-ink-bg" />
               </div>
-              <span className="text-lg font-semibold tracking-[-0.045em] text-white">
-                TERRAGUARD<span className="ml-1 font-mono text-sm text-violet-300">AI</span>
+              <span className="text-lg font-semibold tracking-[-0.045em] text-content-primary">
+                TERRAGUARD<span className="ml-1 font-mono text-sm text-accent-bright">AI</span>
               </span>
             </Link>
-            <span className="hidden rounded-full border border-violet-500/20 bg-violet-500/10 px-2.5 py-1 font-mono text-[10px] text-violet-200 md:inline-block">
+            <span className="hidden rounded border-accent/20 bg-accent/10 px-2.5 py-1 font-mono text-[10px] text-accent-bright md:inline-block">
               GLOBAL INTEL
             </span>
           </div>
@@ -55,37 +55,37 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav className="flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <Link
               href="/"
-              className="hidden rounded-lg px-3 py-2 text-slate-300 transition hover:bg-white/[0.07] hover:text-white sm:flex sm:items-center sm:space-x-1.5"
+              className="hidden rounded px-3 py-2 text-content-secondary transition hover:bg-ink-raised hover:text-content-primary sm:flex sm:items-center sm:space-x-1.5"
             >
-              <Activity className="w-4 h-4 text-violet-400" />
+              <Activity className="w-4 h-4 text-accent-bright" />
               <span>Command Center</span>
             </Link>
             <Link
               href="/location"
-              className="rounded-lg px-3 py-2 text-slate-300 transition hover:bg-white/[0.07] hover:text-white flex items-center space-x-1.5"
+              className="rounded px-3 py-2 text-content-secondary transition hover:bg-ink-raised hover:text-content-primary flex items-center space-x-1.5"
             >
-              <Search className="w-4 h-4 text-purple-400" />
+              <Search className="w-4 h-4 text-accent" />
               <span>Location Risk</span>
             </Link>
             <Link
               href="/sources"
-              className="hidden rounded-lg px-3 py-2 text-slate-300 transition hover:bg-white/[0.07] hover:text-white md:flex md:items-center md:space-x-1.5"
+              className="hidden rounded px-3 py-2 text-content-secondary transition hover:bg-ink-raised hover:text-content-primary md:flex md:items-center md:space-x-1.5"
             >
-              <Database className="w-4 h-4 text-emerald-400" />
+              <Database className="w-4 h-4 text-status-ok" />
               <span>Sources & Health</span>
             </Link>
             <Link
               href="/analytics"
-              className="hidden rounded-lg px-3 py-2 text-slate-300 transition hover:bg-white/[0.07] hover:text-white lg:flex lg:items-center lg:space-x-1.5"
+              className="hidden rounded px-3 py-2 text-content-secondary transition hover:bg-ink-raised hover:text-content-primary lg:flex lg:items-center lg:space-x-1.5"
             >
-              <BarChart3 className="w-4 h-4 text-[#7c9bb5]" />
+              <BarChart3 className="w-4 h-4 text-status-info" />
               <span>Analytics</span>
             </Link>
           </nav>
 
           <div className="hidden lg:flex items-center space-x-2">
-            <div className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-300" /></div>
-            <span className="font-mono text-[10px] text-emerald-300">LIVE</span>
+            <div className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-ok opacity-70" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-status-ok" /></div>
+            <span className="font-mono text-[10px] text-status-ok">LIVE</span>
           </div>
         </header>
 

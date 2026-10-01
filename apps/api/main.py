@@ -14,6 +14,12 @@ logger = get_logger("api_main")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing TerraGuard AI Database & Service Connections...")
+    if settings.OPENROUTER_API_KEY:
+        logger.info(f"OpenRouter AI chat enabled using model '{settings.OPENROUTER_MODEL}'.")
+    else:
+        logger.warning(
+            "OpenRouter API key is missing; AI chat will run in fallback mode without live model responses."
+        )
     try:
         await init_db()
     except Exception as exc:

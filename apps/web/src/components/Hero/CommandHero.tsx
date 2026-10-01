@@ -125,7 +125,7 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
         // Draw particle
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(142, 233, 255, ${p.alpha})`;
+        ctx.fillStyle = `rgba(196, 80, 31, ${p.alpha})`;
         ctx.fill();
 
         // Draw connections
@@ -138,7 +138,7 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(142, 233, 255, ${0.08 * (1 - cdist / CONNECTION_DIST)})`;
+            ctx.strokeStyle = `rgba(196, 80, 31, ${0.08 * (1 - cdist / CONNECTION_DIST)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -200,7 +200,7 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
   return (
     <section
       ref={heroRef}
-      className="hero-surface relative isolate overflow-hidden rounded-[2rem] border border-white/[0.10] px-6 py-8 sm:px-9 md:py-11 lg:min-h-[510px] lg:px-12"
+      className="hero-surface relative isolate overflow-hidden rounded-lg border border-ink-border px-6 py-8 sm:px-9 md:py-11 lg:min-h-[510px] lg:px-12"
       style={{ opacity: heroOpacity, transition: 'opacity 0.3s ease' }}
     >
       {/* Background effects */}
@@ -213,26 +213,26 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
         {/* ── Left: Headline & CTA ──────────────────────────────────────── */}
         <div className="max-w-2xl">
           {/* Shimmer badge */}
-          <div className="badge-shimmer inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200/90">
+          <div className="badge-shimmer inline-flex items-center gap-2 rounded border-accent/20 bg-accent/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-bright/90">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-violet-300 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-violet-200" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-bright opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-bright" />
             </span>
             Global intelligence network
           </div>
 
           <h1
-            className="mt-6 max-w-xl text-balance font-display font-semibold leading-[0.94] tracking-[-0.065em] text-white"
+            className="mt-6 max-w-xl text-balance font-display font-semibold leading-[0.94] tracking-[-0.065em] text-content-primary"
             style={{ fontSize: 'var(--heading-hero)' }}
           >
             See the signal{' '}
-            <span className="bg-gradient-to-r from-violet-200 via-violet-400 to-indigo-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-accent-bright via-accent to-accent-deep bg-clip-text text-transparent">
               before
             </span>{' '}
             it becomes a disaster.
           </h1>
 
-          <p className="mt-6 max-w-lg text-pretty text-base leading-7 text-slate-300 sm:text-lg">
+          <p className="mt-6 max-w-lg text-pretty text-base leading-7 text-content-secondary sm:text-lg">
             TerraGuard turns live Earth observations into a clear, explainable picture of emerging
             risk—so teams can move before conditions escalate.
           </p>
@@ -247,10 +247,10 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
           </div>
 
           {/* Animated metrics */}
-          <div className="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/[0.10] pt-6">
+          <div className="mt-10 flex flex-wrap gap-x-8 gap-y-4 border-t border-ink-border pt-6">
             <HeroMetric label="Active signals" value={activeHazards} />
-            <HeroMetric label="Elevated risk" value={highRiskEvents} accent="text-amber-200" />
-            <HeroMetric label="Signal latency" value="< 2 min" accent="text-emerald-200" isText />
+            <HeroMetric label="Elevated risk" value={highRiskEvents} accent="text-status-warning" />
+            <HeroMetric label="Signal latency" value="< 2 min" accent="text-status-ok" isText />
           </div>
         </div>
 
@@ -265,12 +265,12 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
           <canvas ref={canvasRef} className="hero-particles" aria-hidden="true" />
 
           {/* Floating HUD — "Live Watch" */}
-          <div className="absolute left-[7%] top-[13%] z-20 rounded-2xl border border-white/10 bg-slate-950/55 px-4 py-3 shadow-2xl backdrop-blur-xl">
-            <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-slate-400">
-              <Radio className="h-3.5 w-3.5 text-violet-300" /> Live watch
+          <div className="absolute left-[7%] top-[13%] z-20 rounded border-ink-border bg-ink-surface/60 px-4 py-3 shadow-raised backdrop-blur-xl">
+            <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-content-secondary">
+              <Radio className="h-3.5 w-3.5 text-accent-bright" /> Live watch
             </div>
-            <p className="mt-1.5 text-sm font-medium text-white">Oceanic pressure</p>
-            <p className="mt-1 text-xs text-violet-200">Streaming normally</p>
+            <p className="mt-1.5 text-sm font-medium text-content-primary">Oceanic pressure</p>
+            <p className="mt-1 text-xs text-accent-bright">Streaming normally</p>
           </div>
 
           {/* CSS 3D Globe */}
@@ -302,15 +302,15 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
           })}
 
           {/* Floating HUD — "Model Confidence" */}
-          <div className="absolute bottom-[7%] right-[2%] z-20 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 shadow-2xl backdrop-blur-xl">
-            <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-slate-400">
-              <Sparkles className="h-3.5 w-3.5 text-violet-300" /> Model confidence
+          <div className="absolute bottom-[7%] right-[2%] z-20 rounded border-ink-border bg-ink-raised/60 px-4 py-3 shadow-raised backdrop-blur-xl">
+            <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-content-secondary">
+              <Sparkles className="h-3.5 w-3.5 text-accent-bright" /> Model confidence
             </div>
-            <p className="mt-1.5 text-2xl font-semibold tracking-[-0.04em] text-white">94.8%</p>
+            <p className="mt-1.5 text-2xl font-semibold tracking-[-0.04em] text-content-primary">94.8%</p>
           </div>
 
           {/* Scene label */}
-          <div className="absolute bottom-[4%] left-[9%] z-20 flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-slate-500">
+          <div className="absolute bottom-[4%] left-[9%] z-20 flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.16em] text-content-tertiary">
             <Globe2 className="h-3.5 w-3.5" />{' '}
             {splineSceneUrl ? '3D scene loading safely' : 'Interactive CSS 3D model'}
           </div>
@@ -326,7 +326,7 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
 function HeroMetric({
   label,
   value,
-  accent = 'text-violet-200',
+  accent = 'text-accent-bright',
   isText = false,
 }: {
   label: string;
@@ -361,7 +361,7 @@ function HeroMetric({
   return (
     <div>
       <p className={`text-xl font-semibold tracking-[-0.045em] ${accent}`}>{display}</p>
-      <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500">{label}</p>
+      <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-content-tertiary">{label}</p>
     </div>
   );
 }

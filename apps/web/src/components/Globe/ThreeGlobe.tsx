@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import {
   OrbitControls,
@@ -133,10 +133,10 @@ interface TierStyle {
 }
 
 const RISK_TIERS: TierStyle[] = [
-  { tier: 'low', label: 'Low', color: '#7c9bb5', threshold: 0.25 },
-  { tier: 'moderate', label: 'Moderate', color: '#a3e635', threshold: 0.5 },
-  { tier: 'severe', label: 'Severe', color: '#fbbf24', threshold: 0.75 },
-  { tier: 'extreme', label: 'Extreme', color: '#fb7185', threshold: 1.01 },
+  { tier: 'low', label: 'Low', color: '#7C8FA3', threshold: 0.25 },
+  { tier: 'moderate', label: 'Moderate', color: '#9D3715', threshold: 0.5 },
+  { tier: 'severe', label: 'Severe', color: '#C98A2E', threshold: 0.75 },
+  { tier: 'extreme', label: 'Extreme', color: '#D4451E', threshold: 1.01 },
 ];
 
 const EXTREME_THRESHOLD = 0.82;
@@ -252,9 +252,9 @@ function CityMarker({ city, index, selected, showLabel, onSelect }: CityMarkerPr
 
       {showLabel && active && (
         <Html position={[0, 0.22, 0]} center distanceFactor={9} zIndexRange={[24, 0]} style={{ pointerEvents: 'none' }}>
-          <div className="pointer-events-none -translate-y-2 whitespace-nowrap rounded-lg border border-violet-400/25 bg-slate-950/90 px-3 py-2 text-left shadow-xl shadow-violet-500/10 backdrop-blur-sm">
-            <p className="text-[11px] font-semibold tracking-wide text-slate-100">{city.name}</p>
-            <p className="mt-0.5 text-[9px] uppercase tracking-[0.14em] text-slate-500">
+          <div className="pointer-events-none -translate-y-2 whitespace-nowrap rounded border border-accent/25 bg-ink-surface/95 px-3 py-2 text-left shadow-raised backdrop-blur-sm">
+            <p className="text-[11px] font-semibold tracking-wide text-content-primary">{city.name}</p>
+            <p className="mt-0.5 text-[9px] uppercase tracking-[0.14em] text-content-tertiary">
               {city.country} · {city.lat.toFixed(1)}°, {city.lon.toFixed(1)}°
             </p>
             <div className="mt-1.5 flex items-center gap-2">
@@ -262,7 +262,7 @@ function CityMarker({ city, index, selected, showLabel, onSelect }: CityMarkerPr
               <span className="text-[9px] font-semibold uppercase tracking-[0.14em]" style={{ color: style.color }}>
                 {style.label}
               </span>
-              <span className="text-[9px] tabular-nums text-slate-400">{formatRisk(city.risk)}</span>
+              <span className="text-[9px] tabular-nums text-content-secondary">{formatRisk(city.risk)}</span>
             </div>
           </div>
         </Html>
@@ -409,7 +409,7 @@ function CountryBorders() {
       <bufferGeometry ref={geometryRef} key={positions.length}>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <lineBasicMaterial color="#1e6b7a" transparent opacity={0.55} />
+      <lineBasicMaterial color="#582F24" transparent opacity={0.55} />
     </lineSegments>
   );
 }
@@ -455,25 +455,27 @@ function EarthGroup({ selectedCityName, showLabels, autoRotate, onSelectCity }: 
       {/* Planet body */}
       <mesh>
         <sphereGeometry args={[EARTH_RADIUS, 64, 64]} />
-        <meshStandardMaterial color="#04121f" emissive="#062b45" emissiveIntensity={0.9} roughness={0.85} metalness={0.25} />
+        <meshStandardMaterial color="#150C09" emissive="#3D2B23" emissiveIntensity={0.9} roughness={0.85} metalness={0.25} />
       </mesh>
 
       {/* Structural shell */}
       <mesh>
         <sphereGeometry args={[EARTH_RADIUS * 1.012, 32, 32]} />
-        <meshBasicMaterial color="#8b7cf6" wireframe transparent opacity={0.06} />
+        <meshBasicMaterial color="#9D3715" wireframe transparent opacity={0.06} />
       </mesh>
 
       {/* Graticule */}
       <group>
         {graticule.map(({ id, points }) => (
-          <Line key={id} points={points} color="#8b7cf6" lineWidth={0.5} transparent opacity={0.16} />
+          <Line key={id} points={points} color="#9D3715" lineWidth={0.5} transparent opacity={0.16} />
         ))}
       </group>
 
       {/* Country borders */}
       <BorderBoundary>
-        <CountryBorders />
+        <Suspense fallback={null}>
+          <CountryBorders />
+        </Suspense>
       </BorderBoundary>
 
       {/* Response arcs */}
@@ -485,8 +487,8 @@ function EarthGroup({ selectedCityName, showLabels, autoRotate, onSelectCity }: 
       <mesh>
         <sphereGeometry args={[ATMOSPHERE_RADIUS, 48, 48]} />
         <meshStandardMaterial
-          color="#082f49"
-          emissive="#8b7cf6"
+          color="#110C0A"
+          emissive="#C4501F"
           emissiveIntensity={0.35}
           transparent
           opacity={0.18}
@@ -530,26 +532,28 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
   }, []);
 
   return (
-    <div className="relative h-full min-h-[500px] w-full overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-950">
+    <div className="relative h-full min-h-[500px] w-full overflow-hidden rounded-lg border border-ink-border bg-ink-bg">
       <Canvas
         camera={{ position: [0, 1.1, 5.4], fov: 45 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
       >
-        <color attach="background" args={['#020617']} />
-        <fog attach="fog" args={['#020617', 12, 26]} />
+        <color attach="background" args={['#0A0605']} />
+        <fog attach="fog" args={['#0A0605', 12, 26]} />
 
         <ambientLight intensity={0.35} />
-        <directionalLight position={[5, 3, 5]} intensity={1.4} color="#c4b5fd" />
-        <pointLight position={[-5, -2, -4]} intensity={0.8} color="#8b7cf6" />
+        <directionalLight position={[5, 3, 5]} intensity={1.4} color="#F4EDE9" />
+        <pointLight position={[-5, -2, -4]} intensity={0.8} color="#C4501F" />
 
         <Starfield />
-        <EarthGroup
-          selectedCityName={selectedCityName}
-          showLabels={showLabels}
-          autoRotate={autoRotate}
-          onSelectCity={onSelectCity}
-        />
+        <Suspense fallback={null}>
+          <EarthGroup
+            selectedCityName={selectedCityName}
+            showLabels={showLabels}
+            autoRotate={autoRotate}
+            onSelectCity={onSelectCity}
+          />
+        </Suspense>
 
         <OrbitControls
           enablePan={false}
@@ -565,37 +569,37 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
       {/* ══ HUD overlay ══════════════════════════════════════════ */}
       <div className="pointer-events-none absolute inset-0 select-none">
         {/* Top-left: scan status */}
-        <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-emerald-400/20 bg-slate-950/70 px-3 py-1.5 backdrop-blur-sm">
+        <div className="absolute left-4 top-4 flex items-center gap-2 rounded border border-status-ok/20 bg-ink-surface/70 px-3 py-1.5 backdrop-blur-sm">
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-status-ok opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-status-ok" />
           </span>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-300">Global scan live</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-status-ok">Global scan live</span>
         </div>
 
         {/* Top-left second row: scan parameters */}
-        <div className="absolute left-4 top-12 hidden rounded-lg border border-slate-800/80 bg-slate-950/60 px-3 py-2 backdrop-blur-sm sm:block">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500">TerraGuard AI</p>
-          <p className="mt-1 text-[11px] font-medium text-slate-200">Hazard mesh · orbital view</p>
+        <div className="absolute left-4 top-12 hidden rounded border border-ink-border bg-ink-surface/60 px-3 py-2 backdrop-blur-sm sm:block">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-content-tertiary">TerraGuard AI</p>
+          <p className="mt-1 text-[11px] font-medium text-content-primary">Hazard mesh · orbital view</p>
         </div>
 
         {/* Top-right: metrics */}
-        <div className="absolute right-4 top-4 rounded-lg border border-slate-800/80 bg-slate-950/60 px-3 py-2.5 text-right backdrop-blur-sm">
-          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500">Monitored metros</p>
-          <p className="mt-1 text-lg font-semibold tabular-nums leading-none text-white">{stats.monitored}</p>
-          <p className="mt-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-rose-300/80">Extreme signals</p>
-          <p className="mt-0.5 text-sm font-semibold tabular-nums leading-none text-rose-200">{stats.extreme}</p>
+        <div className="absolute right-4 top-4 rounded border border-ink-border bg-ink-surface/60 px-3 py-2.5 text-right backdrop-blur-sm">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-content-tertiary">Monitored metros</p>
+          <p className="mt-1 text-lg font-semibold tabular-nums leading-none text-content-primary">{stats.monitored}</p>
+          <p className="mt-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-status-critical/80">Extreme signals</p>
+          <p className="mt-0.5 text-sm font-semibold tabular-nums leading-none text-status-critical">{stats.extreme}</p>
         </div>
 
         {/* Right: tier legend */}
-        <div className="absolute right-4 top-32 hidden rounded-lg border border-slate-800/80 bg-slate-950/60 px-3 py-2.5 backdrop-blur-sm md:block">
-          <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500">Risk index</p>
+        <div className="absolute right-4 top-32 hidden rounded border border-ink-border bg-ink-surface/60 px-3 py-2.5 backdrop-blur-sm md:block">
+          <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-content-tertiary">Risk index</p>
           <ul className="space-y-1.5">
             {RISK_TIERS.map((tier, index) => (
               <li key={tier.tier} className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: tier.color }} />
-                <span className="text-[10px] tracking-wide text-slate-400">{tier.label}</span>
-                <span className="ml-auto text-[9px] tabular-nums text-slate-600">{tierRange(index)}</span>
+                <span className="text-[10px] tracking-wide text-content-secondary">{tier.label}</span>
+                <span className="ml-auto text-[9px] tabular-nums text-content-tertiary">{tierRange(index)}</span>
               </li>
             ))}
           </ul>
@@ -603,12 +607,12 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
 
         {/* Bottom-left: controls */}
         <div className="absolute bottom-4 left-4 flex flex-wrap items-center gap-2">
-          <div className="pointer-events-auto flex overflow-hidden rounded-lg border border-slate-800/80 bg-slate-950/70 backdrop-blur-sm">
+          <div className="pointer-events-auto flex overflow-hidden rounded border border-ink-border bg-ink-surface/70 backdrop-blur-sm">
             <button
               type="button"
               onClick={() => setAutoRotate(value => !value)}
               className={`px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition ${
-                autoRotate ? 'bg-violet-400/10 text-violet-300' : 'text-slate-500 hover:text-slate-300'
+                autoRotate ? 'bg-accent/15 text-accent-bright' : 'text-content-tertiary hover:text-content-secondary'
               }`}
             >
               {autoRotate ? 'Auto-rotate on' : 'Auto-rotate off'}
@@ -616,26 +620,26 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
             <button
               type="button"
               onClick={() => setShowLabels(value => !value)}
-              className={`border-l border-slate-800/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition ${
-                showLabels ? 'bg-violet-400/10 text-violet-300' : 'text-slate-500 hover:text-slate-300'
+              className={`border-l border-ink-border px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] transition ${
+                showLabels ? 'bg-accent/15 text-accent-bright' : 'text-content-tertiary hover:text-content-secondary'
               }`}
             >
               {showLabels ? 'Labels on' : 'Labels off'}
             </button>
           </div>
-          <p className="hidden text-[10px] tracking-wide text-slate-600 lg:block">
+          <p className="hidden text-[10px] tracking-wide text-content-tertiary lg:block">
             Drag to orbit · Scroll to zoom · Select a marker
           </p>
         </div>
 
         {/* Bottom-right: selected city readout */}
-        <div className="absolute bottom-4 right-4 w-60 rounded-xl border border-slate-800/80 bg-slate-950/75 p-3.5 backdrop-blur-sm">
+        <div className="absolute bottom-4 right-4 w-60 rounded border border-ink-border bg-ink-surface/75 p-3.5 backdrop-blur-sm">
           {selected ? (
             <>
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-500">{selected.country}</p>
-                  <h3 className="mt-1 text-sm font-semibold tracking-tight text-white">{selected.name}</h3>
+                  <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-content-tertiary">{selected.country}</p>
+                  <h3 className="mt-1 text-sm font-semibold tracking-tight text-content-primary">{selected.name}</h3>
                 </div>
                 <span
                   className="rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em]"
@@ -648,7 +652,7 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
                 </span>
               </div>
 
-              <div className="mt-3 h-1 overflow-hidden rounded-full bg-slate-800">
+              <div className="mt-3 h-1 overflow-hidden rounded-full bg-ink-raised">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${Math.round(selected.risk * 100)}%`, backgroundColor: riskTier(selected.risk).color }}
@@ -657,23 +661,23 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
 
               <dl className="mt-3 grid grid-cols-3 gap-2 text-center">
                 <div>
-                  <dt className="text-[9px] uppercase tracking-[0.14em] text-slate-600">Risk</dt>
-                  <dd className="mt-0.5 text-xs font-semibold tabular-nums text-slate-200">{formatRisk(selected.risk)}</dd>
+                  <dt className="text-[9px] uppercase tracking-[0.14em] text-content-tertiary">Risk</dt>
+                  <dd className="mt-0.5 text-xs font-semibold tabular-nums text-content-primary">{formatRisk(selected.risk)}</dd>
                 </div>
                 <div>
-                  <dt className="text-[9px] uppercase tracking-[0.14em] text-slate-600">Lat</dt>
-                  <dd className="mt-0.5 text-xs font-semibold tabular-nums text-slate-200">{selected.lat.toFixed(2)}°</dd>
+                  <dt className="text-[9px] uppercase tracking-[0.14em] text-content-tertiary">Lat</dt>
+                  <dd className="mt-0.5 text-xs font-semibold tabular-nums text-content-primary">{selected.lat.toFixed(2)}°</dd>
                 </div>
                 <div>
-                  <dt className="text-[9px] uppercase tracking-[0.14em] text-slate-600">Lon</dt>
-                  <dd className="mt-0.5 text-xs font-semibold tabular-nums text-slate-200">{selected.lon.toFixed(2)}°</dd>
+                  <dt className="text-[9px] uppercase tracking-[0.14em] text-content-tertiary">Lon</dt>
+                  <dd className="mt-0.5 text-xs font-semibold tabular-nums text-content-primary">{selected.lon.toFixed(2)}°</dd>
                 </div>
               </dl>
             </>
           ) : (
-            <p className="text-[11px] leading-5 text-slate-500">
+            <p className="text-[11px] leading-5 text-content-tertiary">
               No metro selected. Click any marker to pull its calibrated risk profile. Network mean index{' '}
-              <span className="font-semibold text-slate-300">{stats.mean}</span>.
+              <span className="font-semibold text-content-secondary">{stats.mean}</span>.
             </p>
           )}
         </div>
@@ -681,3 +685,4 @@ export default function ThreeGlobe({ onSelectCity, selectedCityName }: ThreeGlob
     </div>
   );
 }
+

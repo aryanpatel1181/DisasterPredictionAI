@@ -71,10 +71,10 @@ export default function IntelligenceCards({ activeHazards, highRiskEvents, offic
         <div className="relative z-10 flex items-center gap-3">
           <div className="intelligence-card-icon intelligence-card-icon-emerald"><Database className="h-5 w-5" /></div>
           <div>
-            <p className="text-sm font-medium text-slate-100">Network data health</p>
-            <p className="mt-1 text-xs text-slate-500">USGS, GDACS and WMO sources operating normally</p>
+            <p className="text-sm font-medium text-content-primary">Network data health</p>
+            <p className="mt-1 text-xs text-content-tertiary">USGS, GDACS and WMO sources operating normally</p>
           </div>
-          <div className="ml-auto flex items-center gap-1.5 rounded-full border border-emerald-400/15 bg-emerald-400/[0.07] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-200">
+          <div className="ml-auto flex items-center gap-1.5 rounded border-status-ok/20 bg-status-ok/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-status-ok">
             <CheckCircle2 className="h-3.5 w-3.5" /> Nominal
           </div>
         </div>
@@ -154,11 +154,11 @@ function IntelCard({
           <div className={`intelligence-card-icon intelligence-card-icon-${color}`}>
             <Icon className="h-5 w-5" />
           </div>
-          <ArrowUpRight className="h-4 w-4 text-slate-600 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-slate-300" />
+          <ArrowUpRight className="h-4 w-4 text-content-tertiary transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-content-secondary" />
         </div>
-        <p className="mt-8 text-4xl font-semibold tracking-[-0.055em] text-white">{count}</p>
-        <h2 className="mt-1 text-sm font-medium text-slate-200">{label}</h2>
-        <p className="mt-2 text-xs leading-5 text-slate-500">{detail}</p>
+        <p className="mt-8 text-4xl font-semibold tracking-[-0.055em] text-content-primary">{count}</p>
+        <h2 className="mt-1 text-sm font-medium text-content-primary">{label}</h2>
+        <p className="mt-2 text-xs leading-5 text-content-tertiary">{detail}</p>
       </div>
     </article>
   );

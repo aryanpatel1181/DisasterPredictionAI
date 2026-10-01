@@ -134,19 +134,19 @@ export default function LocationRiskPage() {
   return (
     <div className="flex-1 p-4 md:p-6 max-w-[1400px] w-full mx-auto flex flex-col space-y-6">
       <div>
-        <h1 className="text-2xl font-extrabold text-white flex items-center space-x-2">
-          <Globe className="w-6 h-6 text-purple-400" />
+        <h1 className="text-2xl font-extrabold text-content-primary flex items-center space-x-2">
+          <Globe className="w-6 h-6 text-accent" />
           <span>Global City Natural Hazard Risk Engine</span>
         </h1>
-        <p className="text-xs text-slate-400 mt-1 max-w-2xl font-mono">
+        <p className="text-xs text-content-secondary mt-1 max-w-2xl font-mono">
           Search ANY city globally (e.g. Ahmedabad, Chicago, Tokyo, London, Mumbai) to evaluate calibrated probabilistic disaster risks.
         </p>
       </div>
 
-      <form onSubmit={handleFormSubmit} className="glass-panel p-4 rounded-xl border border-dark-border flex flex-col md:flex-row gap-3 items-center z-30">
+      <form onSubmit={handleFormSubmit} className="glass-panel p-4 rounded-md border border-dark-border flex flex-col md:flex-row gap-3 items-center z-30">
         <div ref={searchContainerRef} className="flex-1 w-full relative">
           <div className="relative">
-            <MapPin className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-purple-400" />
+            <MapPin className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-accent" />
             <input
               type="text"
               value={query}
@@ -156,11 +156,11 @@ export default function LocationRiskPage() {
               }}
               onFocus={() => setShowDropdown(true)}
               placeholder="Search ANY city worldwide (e.g. Ahmedabad, Chicago, Kyoto, Berlin)..."
-              className="w-full bg-dark-bg border border-dark-border rounded-lg pl-9 pr-10 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-purple-500 font-mono transition"
+              className="w-full bg-ink-bg border border-dark-border rounded-lg pl-9 pr-10 py-2.5 text-sm text-content-primary placeholder-content-tertiary focus:outline-none focus:border-accent font-mono transition"
             />
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1 text-slate-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1 text-content-secondary">
               {searchingGeocode ? (
-                <Loader2 className="w-4 h-4 animate-spin text-purple-400" />
+                <Loader2 className="w-4 h-4 animate-spin text-accent" />
               ) : (
                 <ChevronDown className="w-4 h-4 cursor-pointer" onClick={() => setShowDropdown(!showDropdown)} />
               )}
@@ -168,13 +168,13 @@ export default function LocationRiskPage() {
           </div>
 
           {showDropdown && (
-            <div className="absolute top-full left-0 right-0 mt-1.5 glass-panel bg-dark-card border border-slate-700 rounded-xl max-h-72 overflow-y-auto shadow-2xl z-50 divide-y divide-slate-800">
-              <div className="p-2 bg-dark-bg/60 text-[10px] font-mono text-purple-400 uppercase font-semibold flex items-center justify-between">
+            <div className="absolute top-full left-0 right-0 mt-1.5 glass-panel bg-ink-surface border border-ink-border-strong rounded-lg max-h-72 overflow-y-auto shadow-raised z-50 divide-y divide-ink-border">
+              <div className="p-2 bg-ink-bg/60 text-[10px] font-mono text-accent uppercase font-semibold flex items-center justify-between">
                 <span>GLOBAL GEOGRAPHIC SEARCH RESULTS</span>
                 <span>OPENSTREETMAP NOMINATIM LIVE</span>
               </div>
               {suggestions.length === 0 ? (
-                <div className="p-4 text-xs font-mono text-slate-400 text-center">
+                <div className="p-4 text-xs font-mono text-content-secondary text-center">
                   No matching global location found. Enter custom latitude & longitude below.
                 </div>
               ) : (
@@ -182,21 +182,21 @@ export default function LocationRiskPage() {
                   <div
                     key={idx}
                     onClick={() => selectCity(city)}
-                    className="p-3 hover:bg-purple-950/40 hover:border-l-4 hover:border-purple-500 cursor-pointer transition flex items-center justify-between group"
+                    className="p-3 hover:bg-accent/10 hover:border-l-4 hover:border-accent cursor-pointer transition flex items-center justify-between group"
                   >
                     <div className="flex items-center space-x-2.5">
-                      <Navigation className="w-3.5 h-3.5 text-purple-400 group-hover:scale-110 transition shrink-0" />
+                      <Navigation className="w-3.5 h-3.5 text-accent group-hover:scale-110 transition shrink-0" />
                       <div>
-                        <div className="text-xs font-bold text-slate-100 group-hover:text-purple-300 truncate max-w-md">
+                        <div className="text-xs font-bold text-content-primary group-hover:text-accent-bright truncate max-w-md">
                           {city.display_name || `${city.name}, ${city.country}`}
                         </div>
-                        <div className="text-[10px] font-mono text-slate-400">
+                        <div className="text-[10px] font-mono text-content-tertiary">
                           Coordinates: ({city.lat.toFixed(4)}, {city.lon.toFixed(4)})
                         </div>
                       </div>
                     </div>
 
-                    <span className="text-[10px] font-mono text-purple-400 opacity-0 group-hover:opacity-100 transition shrink-0 ml-2">
+                    <span className="text-[10px] font-mono text-accent-bright opacity-0 group-hover:opacity-100 transition shrink-0 ml-2">
                       COMPUTE RISK →
                     </span>
                   </div>
@@ -212,43 +212,43 @@ export default function LocationRiskPage() {
             value={lat}
             onChange={e => setLat(e.target.value)}
             placeholder="Latitude"
-            className="w-28 bg-dark-bg border border-dark-border rounded-lg px-3 py-2.5 text-slate-100 focus:outline-none focus:border-purple-500"
+            className="w-28 bg-ink-bg border border-dark-border rounded-lg px-3 py-2.5 text-content-primary focus:outline-none focus:border-accent"
           />
           <input
             type="text"
             value={lon}
             onChange={e => setLon(e.target.value)}
             placeholder="Longitude"
-            className="w-28 bg-dark-bg border border-dark-border rounded-lg px-3 py-2.5 text-slate-100 focus:outline-none focus:border-purple-500"
+            className="w-28 bg-ink-bg border border-dark-border rounded-lg px-3 py-2.5 text-content-primary focus:outline-none focus:border-accent"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full md:w-auto px-6 py-2.5 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-xs hover:from-purple-500 hover:to-indigo-500 transition shadow-lg shadow-purple-600/20 font-mono shrink-0"
+          className="w-full md:w-auto px-6 py-2.5 rounded-lg bg-gradient-to-r from-accent to-accent-deep text-content-primary font-bold text-xs hover:from-accent-bright hover:to-accent transition shadow-raised font-mono shrink-0"
         >
           {loading ? 'ANALYZING...' : 'COMPUTE RISK'}
         </button>
       </form>
 
-      <div className="p-3.5 rounded-xl border border-violet-500/30 bg-violet-950/20 text-xs text-violet-200 flex items-start space-x-2.5">
-        <Info className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
+      <div className="p-3.5 rounded-md border border-accent/30 bg-accent/10 text-xs text-content-secondary flex items-start space-x-2.5">
+        <Info className="w-4 h-4 text-accent-bright shrink-0 mt-0.5" />
         <div>
           <span className="font-bold">Global Scientific Coverage:</span> TerraGuard AI evaluates independent disaster risk models for any coordinate worldwide. Individual hazard probabilities are strictly NOT averaged into a synthetic universal score to maintain physical rigor.
         </div>
       </div>
 
       {riskData && (
-        <div className="glass-panel p-4 rounded-xl border border-purple-500/30 flex items-center justify-between bg-purple-950/10">
+        <div className="glass-panel p-4 rounded-md border border-accent/30 flex items-center justify-between bg-accent/[0.07]">
           <div>
-            <div className="text-xs font-mono text-purple-400 font-bold uppercase">SELECTED LOCATION PROFILE</div>
-            <div className="text-xl font-extrabold text-white mt-0.5">{riskData.location_name}</div>
-            <div className="text-xs font-mono text-slate-400 mt-0.5">
+            <div className="text-xs font-mono text-accent-bright font-bold uppercase">SELECTED LOCATION PROFILE</div>
+            <div className="text-xl font-extrabold text-content-primary mt-0.5">{riskData.location_name}</div>
+            <div className="text-xs font-mono text-content-tertiary mt-0.5">
               Coordinates: ({riskData.latitude.toFixed(4)}, {riskData.longitude.toFixed(4)})
             </div>
           </div>
-          <div className="px-3 py-1 rounded bg-purple-500/20 text-purple-300 font-mono text-xs border border-purple-500/40">
+          <div className="px-3 py-1 rounded bg-accent/20 text-accent-bright font-mono text-xs border border-accent/40">
             5 HAZARDS EVALUATED
           </div>
         </div>
@@ -259,49 +259,49 @@ export default function LocationRiskPage() {
           {Object.entries(riskData.hazard_risks || {}).map(([htype, risk]: [string, any]) => {
             const probPct = Math.round((risk.risk_probability || 0) * 100);
 
-            let borderClass = 'border-slate-800';
-            if (probPct >= 70) borderClass = 'border-red-500/50 bg-red-950/10';
-            else if (probPct >= 40) borderClass = 'border-amber-500/50 bg-amber-950/10';
+            let borderClass = 'border-ink-border';
+            if (probPct >= 70) borderClass = 'border-status-critical/50 bg-status-critical/10';
+            else if (probPct >= 40) borderClass = 'border-status-warning/50 bg-status-warning/10';
 
             return (
-              <div key={htype} className={`glass-panel p-5 rounded-xl border ${borderClass} flex flex-col justify-between shadow-xl`}>
+              <div key={htype} className={`glass-panel p-5 rounded-md border ${borderClass} flex flex-col justify-between shadow-raised`}>
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="font-mono text-sm font-bold uppercase tracking-wider text-slate-200">
+                    <span className="font-mono text-sm font-bold uppercase tracking-wider text-content-primary">
                       {htype.replace('_', ' ')}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-dark-bg text-amber-400 border border-slate-700">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-ink-bg text-status-warning border border-ink-border-strong">
                       {risk.severity} SEVERITY
                     </span>
                   </div>
 
                   <div className="flex items-baseline space-x-2 mb-3">
-                    <span className="text-4xl font-extrabold font-mono text-white">{probPct}%</span>
-                    <span className="text-xs font-mono text-slate-400">Risk Probability</span>
+                    <span className="text-4xl font-extrabold font-mono text-content-primary">{probPct}%</span>
+                    <span className="text-xs font-mono text-content-secondary">Risk Probability</span>
                   </div>
 
-                  <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden mb-4">
+                  <div className="w-full bg-ink-raised h-2 rounded-full overflow-hidden mb-4">
                     <div
                       className={`h-full rounded-full ${
-                        probPct >= 70 ? 'bg-red-500' : probPct >= 40 ? 'bg-amber-400' : 'bg-violet-400'
+                        probPct >= 70 ? 'bg-status-critical' : probPct >= 40 ? 'bg-status-warning' : 'bg-accent-bright'
                       }`}
                       style={{ width: `${probPct}%` }}
                     />
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-800/80 text-[11px] font-mono space-y-1 text-slate-400">
+                <div className="pt-3 border-t border-ink-border/80 text-[11px] font-mono space-y-1 text-content-secondary">
                   <div className="flex justify-between">
                     <span>Forecast Window:</span>
-                    <span className="text-slate-200">{risk.forecast_window}</span>
+                    <span className="text-content-primary">{risk.forecast_window}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Confidence Score:</span>
-                    <span className="text-purple-400 font-bold">{Math.round(risk.confidence * 100)}%</span>
+                    <span className="text-accent-bright font-bold">{Math.round(risk.confidence * 100)}%</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Model Version:</span>
-                    <span className="text-slate-300">{risk.model_version}</span>
+                    <span className="text-content-secondary">{risk.model_version}</span>
                   </div>
                 </div>
               </div>
