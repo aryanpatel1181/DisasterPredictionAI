@@ -209,9 +209,9 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
       <div className="hero-aurora hero-aurora-one" aria-hidden="true" />
       <div className="hero-aurora hero-aurora-two" aria-hidden="true" />
 
-      <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.8fr)]">
+      <div className="relative z-10 grid items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.8fr)]">
         {/* ── Left: Headline & CTA ──────────────────────────────────────── */}
-        <div className="max-w-2xl">
+        <div className="max-w-[760px]">
           {/* Shimmer badge */}
           <div className="badge-shimmer inline-flex items-center gap-2 rounded border-accent/20 bg-accent/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-bright/90">
             <span className="relative flex h-2 w-2">
@@ -222,8 +222,7 @@ export default function CommandHero({ activeHazards, highRiskEvents }: CommandHe
           </div>
 
           <h1
-            className="mt-6 max-w-xl text-balance font-display font-semibold leading-[0.94] tracking-[-0.065em] text-content-primary"
-            style={{ fontSize: 'var(--heading-hero)' }}
+            className="mt-6 max-w-[760px] text-balance font-display text-6xl font-semibold leading-[1.02] tracking-[-0.036em] text-content-primary"
           >
             See the signal{' '}
             <span className="bg-gradient-to-r from-accent-bright via-accent to-accent-deep bg-clip-text text-transparent">

@@ -63,6 +63,7 @@ export default function EventFeed({ events, selectedEventId, onSelectEvent }: Ev
       <div className="flex items-center space-x-1.5 overflow-x-auto pb-2 mb-2 no-scrollbar">
         {['all', 'flood', 'earthquake', 'tsunami', 'severe_weather', 'cyclone'].map(cat => (
           <button
+            type="button"
             key={cat}
             onClick={() => setFilterType(cat)}
             className={`px-2.5 py-1 rounded-md text-xs font-mono capitalize transition shrink-0 ${
@@ -91,10 +92,11 @@ export default function EventFeed({ events, selectedEventId, onSelectEvent }: Ev
             else if (evt.status === 'AI_RISK_ESTIMATE') statusBadge = 'badge-ai-estimate';
 
             return (
-              <div
+              <button
+                type="button"
                 key={evt.event_id}
                 onClick={() => onSelectEvent(evt)}
-                className={`p-3 rounded-lg border transition cursor-pointer ${
+                className={`p-3 rounded-lg border text-left w-full transition cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 ${
                   isSelected
                     ? 'bg-ink-raised/80 border-accent/60 shadow-raised'
                     : 'bg-ink-bg/50 border-ink-border hover:border-ink-border-strong hover:bg-ink-bg'
@@ -124,7 +126,7 @@ export default function EventFeed({ events, selectedEventId, onSelectEvent }: Ev
                   <span>{evt.nearest_populated_location}</span>
                   <span className={`uppercase font-semibold ${getSeverityColor(evt.severity)}`}>{evt.severity}</span>
                 </div>
-              </div>
+              </button>
             );
           })
         )}

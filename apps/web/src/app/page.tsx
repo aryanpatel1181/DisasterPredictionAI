@@ -61,19 +61,22 @@ export default function CommandCenterPage() {
   const officialWarningCount = events.filter(e => e.status === 'OFFICIAL_WARNING' || (e.official_warnings && e.official_warnings.length > 0)).length;
 
   return (
-    <div className="premium-page flex-1 px-4 py-5 md:px-6 md:py-8">
-      <div className="mx-auto flex w-full max-w-[1540px] flex-col gap-8">
-      <CommandHero activeHazards={events.length} highRiskEvents={highRiskCount} />
-      <IntelligenceCards activeHazards={events.length} highRiskEvents={highRiskCount} officialWarnings={officialWarningCount} />
+    <div className="premium-page flex-1 px-4 py-6 md:px-8 md:py-10">
+      <div className="mx-auto flex w-full max-w-[1540px] flex-col gap-24 md:gap-32">
+      {/* Chapter 1: Hero + live telemetry row (tight rhythm) */}
+      <div className="flex flex-col gap-6">
+        <CommandHero activeHazards={events.length} highRiskEvents={highRiskCount} />
+        <IntelligenceCards activeHazards={events.length} highRiskEvents={highRiskCount} officialWarnings={officialWarningCount} />
+      </div>
 
-      {/* Capabilities Bento Grid */}
+      {/* Chapter 2: Capabilities Bento Grid */}
       <FeatureGrid />
 
-      {/* Main Grid Workspace */}
+      {/* Chapter 3: Live intelligence, its own chapter behind a top hairline */}
       <section
         id="live-intelligence"
         ref={intelRef}
-        className={`scroll-mt-24 section-reveal ${intelRevealed ? 'revealed' : ''}`}
+        className={`scroll-mt-24 border-t border-ink-border pt-16 section-reveal ${intelRevealed ? 'revealed' : ''}`}
       >
         <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
           <div>
