@@ -26,3 +26,4 @@ html{scroll-behavior:smooth}body{margin:0;background:#080f12;color:#edf4f0;font-
 @media(max-width:900px){.interactive-orbit{transform:none}.globe-canvas{width:100%;height:auto;margin-top:50px}}
 @media(max-width:650px){.interactive-orbit{height:420px;margin:15px 0 0}.globe-canvas{width:330px;height:330px;margin-top:10px}.globe-toolbar button{width:40px;height:40px}.globe-toolbar{bottom:58px}.globe-instructions{bottom:33px}.interactive-orbit .orbital-coordinate{top:0}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+.tg-hero .hero-byline{margin:-8px 0 20px;font-size:12px;line-height:1.6;letter-spacing:.04em;color:#9cabae}.hero-byline span{color:#a3edd0;font-weight:600}
