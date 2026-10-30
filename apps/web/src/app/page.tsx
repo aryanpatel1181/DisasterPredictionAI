@@ -39,7 +39,7 @@ export default function Home() {
     <section className="tg-hero">
       <div className="tg-hero-copy"><p className="eyebrow"><span className="status-dot"/> PLANET-SCALE PERSPECTIVE</p>
         <h1>A changing planet.<br/><em>A clearer picture.</em></h1>
-        <p className="hero-byline">Built by <span>Aryan</span> and AI</p>
+        <p className="hero-byline">An <span>Aryan</span> experiment, powered by AI.</p>
         <p className="hero-description">Connect the signals. Understand the context. Explore environmental intelligence with the evidence always in view.</p>
         <div className="hero-actions"><a className="tg-button primary" href="#monitor">Open the observatory <ArrowDown size={16}/></a><Link className="text-link" href="/about">Explore the engineering <ArrowUpRight size={16}/></Link></div>
         <div className="hero-caption"><ShieldCheck size={15}/> Transparent sources. Clearly defined uncertainty.</div>
