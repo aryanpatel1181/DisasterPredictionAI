@@ -1,17 +1,21 @@
-# TerraGuard AI - Project State
+# Current state — portfolio refresh
 
-## Current Overview
-TerraGuard AI is an autonomous, global AI-powered natural-disaster intelligence, forecasting, risk-assessment, and early-warning platform.
+## Implemented
 
-## Operational Status (Milestones 1 & 2 Complete + Universal Global Geocoding)
-- **Universal Global City Risk Engine**:
-  - OpenStreetMap Nominatim live geocoding search on [location/page.tsx](file:///c:/Users/aryan/Projects/DisasterPredictionAI/apps/web/src/app/location/page.tsx).
-  - Evaluates calibrated disaster risk scores for **ANY city or coordinate globally** (e.g., Ahmedabad, Chicago, Tokyo, London, Mumbai, Nairobi, Santiago, Manila, etc.).
-- **Continuous AI Disaster Risk Prediction Engine**:
-  - Module: [services/risk_engine/predictive_pipeline.py](file:///c:/Users/aryan/Projects/DisasterPredictionAI/services/risk_engine/predictive_pipeline.py)
-  - Trained Models: XGBoost, LightGBM, Random Forest with Platt sigmoid calibration.
-  - Multi-Horizon Forecast Windows: Explicit `6h`, `12h`, `24h`, and `72h` prediction windows.
-  - API Endpoints: `GET /api/v1/predictions` & `POST /api/v1/predictions/train` ([predictions.py](file:///c:/Users/aryan/Projects/DisasterPredictionAI/apps/api/routers/predictions.py)).
+- Responsive mint/charcoal observatory, illustrative orbital hero, real MapLibre event map.
+- Observation versus research tabs, location search, category filter, selected event evidence, JSON download, and refresh interval.
+- Project notes page for architecture and honest model limitations.
+- Same-origin API proxy, clearer outage behavior, improved assistant accessibility and new-chat control.
+- Synthetic model provenance labels, no fabricated source-health counters, two-minute ingestion cache.
+- Standalone production containers, private services, rate-limited gateway, secret exclusion, and CI configuration.
+- Upgraded frontend dependencies and zero-vulnerability npm audit at verification time.
 
-## Test Suite & Verification Results
-- **Pytest Suite**: 14/14 tests passing (100% success rate).
+## Verification limits
+
+Passed locally: Next.js production build, TypeScript check, three API-proxy tests, npm audit (zero reported vulnerabilities), Python syntax compilation, and production Compose configuration validation. Automated Chromium checks passed for observation/research switching, event details, Escape dismissal, search, bundled map initialization, mobile overflow, and the methodology page. Browser checks use mocked event responses, not live provider verification.
+
+Full backend execution is blocked in the inherited Windows environment by an Application Control rejection of a NumPy DLL. Docker Desktop's Linux engine was unavailable. Container execution and Linux CI still need to be verified before a public launch.
+
+## Research limits
+
+The model pipeline and location scoring use synthetic or illustrative inputs. Do not present those as validated hazard forecasts. The assistant in this checkout uses OpenRouter and preparedness context; it is not the separate 14-day weather implementation from the old folder.

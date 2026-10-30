@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import FootfallWidget from '@/components/Analytics/FootfallWidget';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = '';
 
 interface HourBucket {
   hour: number;

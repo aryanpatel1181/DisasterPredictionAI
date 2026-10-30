@@ -1,0 +1,31 @@
+# Free-only portfolio API. The Next.js frontend runs separately on Vercel Hobby.
+services:
+  - type: web
+    name: terraguard-api
+    runtime: docker
+    plan: free
+    region: ohio
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PORT
+        value: '8000'
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:////tmp/terraguard.db
+      - key: CORS_ORIGINS
+        value: '[]'
+      - key: API_PROXY_TOKEN
+        generateValue: true
+      - key: SECRET_KEY
+        generateValue: true
+      - key: OPENROUTER_MODEL
+        value: openrouter/free
+      - key: OPENBLAS_NUM_THREADS
+        value: '1'
+      - key: OMP_NUM_THREADS
+        value: '1'
+      - key: MPLCONFIGDIR
+        value: /tmp/matplotlib

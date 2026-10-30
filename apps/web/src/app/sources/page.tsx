@@ -4,19 +4,22 @@ import React, { useEffect, useState } from 'react';
 import { Database, CheckCircle, AlertTriangle, RefreshCw, Server, Activity } from 'lucide-react';
 
 export default function SourcesHealthPage() {
-  const [sources, setSources] = useState<any[]>(getInitialMockSources());
+  const [sources, setSources] = useState<any[]>([]);
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const fetchSources = async () => {
     setLoading(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = '';
       const res = await fetch(apiUrl + '/api/v1/sources/status');
       if (!res.ok) throw new Error('API server unavailable');
       const data = await res.json();
       setSources(data);
+      setError('');
     } catch (err) {
       console.warn('API server unavailable, returning cached adapter metrics:', err);
+      setError('Source health is unavailable. Previously loaded results may be stale.');
     } finally {
       setLoading(false);
     }
@@ -51,6 +54,8 @@ export default function SourcesHealthPage() {
       </div>
 
       {/* Sources Grid */}
+      {error && <p role="alert" className="feed-notice">{error}</p>}
+      {!sources.length && <p className="text-content-secondary">{loading ? 'Checking providers…' : 'No provider health data available.'}</p>}
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
         {sources.map(src => {
           const isHealthy = src.status === 'HEALTHY';
@@ -91,7 +96,7 @@ export default function SourcesHealthPage() {
                   </div>
                   <div className='flex justify-between'>
                     <span>Records Ingested:</span>
-                    <span className='text-content-primary'>{src.records_ingested || 45}</span>
+                    <span className='text-content-primary'>{src.records_ingested ?? 0}</span>
                   </div>
                   <div className='flex justify-between'>
                     <span>Dev/Mock Fallback:</span>
@@ -104,7 +109,7 @@ export default function SourcesHealthPage() {
 
               <div className='pt-3 border-t border-ink-border text-[10px] font-mono text-content-tertiary flex items-center justify-between'>
                 <span>Last Ingest:</span>
-                <span>{src.last_success_timestamp ? new Date(src.last_success_timestamp).toLocaleTimeString() : 'Just now'}</span>
+                <span>{src.last_success_timestamp ? new Date(src.last_success_timestamp).toLocaleTimeString() : 'No successful ingestion yet'}</span>
               </div>
             </div>
           );

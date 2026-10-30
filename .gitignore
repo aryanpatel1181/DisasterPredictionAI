@@ -17,6 +17,9 @@ __pycache__/
 # Environment & secrets
 .env
 .env.local
+.env.*
+!.env.example
+.vercel/
 *.db
 *.sqlite3
 
@@ -33,6 +36,9 @@ build/
 *.swp
 
 # Logs
+work/
+test_console*.js
+apps/web/public/vendor/
 *.log
 npm-debug.log*
 yarn-error.log*

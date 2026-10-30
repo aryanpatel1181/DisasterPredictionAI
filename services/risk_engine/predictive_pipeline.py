@@ -103,7 +103,7 @@ class ContinuousDisasterPredictor:
                     data_freshness_seconds=120.0,
                     sources=[
                         DataProvenance(
-                            provider="TerraGuard_AI_Predictive_Engine",
+                            provider="DEMO_Synthetic_Flood_Research",
                             provider_record_id=event_id,
                             source_timestamp=now,
                             ingestion_timestamp=now,
@@ -155,7 +155,7 @@ class ContinuousDisasterPredictor:
                     data_freshness_seconds=180.0,
                     sources=[
                         DataProvenance(
-                            provider="TerraGuard_AI_Convective_Engine",
+                            provider="DEMO_Synthetic_Convective_Research",
                             provider_record_id=event_id,
                             source_timestamp=now,
                             ingestion_timestamp=now,
@@ -206,7 +206,7 @@ class ContinuousDisasterPredictor:
                     data_freshness_seconds=240.0,
                     sources=[
                         DataProvenance(
-                            provider="TerraGuard_AI_Cyclone_Engine",
+                            provider="DEMO_Synthetic_Cyclone_Research",
                             provider_record_id=event_id,
                             source_timestamp=now,
                             ingestion_timestamp=now,

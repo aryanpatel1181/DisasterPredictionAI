@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from packages.shared.config import settings
 from packages.shared.logging import get_logger
 from apps.api.database import init_db
+from apps.api.proxy_guard import ProxyGuard
 from apps.api.routers import health, sources, events, hazards, location, alerts, models, history, predictions, chat, analytics
 from apps.api.routers.events import get_or_refresh_events
 
@@ -39,13 +40,14 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=settings.CORS_ORIGINS,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 app.include_router(health.router)
+app.add_middleware(ProxyGuard, token=settings.API_PROXY_TOKEN)
 app.include_router(sources.router)
 app.include_router(events.router)
 app.include_router(hazards.router)

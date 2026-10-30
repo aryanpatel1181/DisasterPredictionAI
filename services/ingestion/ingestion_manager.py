@@ -29,8 +29,14 @@ class IngestionManager:
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
         all_events: List[NormalizedHazardEvent] = []
-        for res in results:
+        adapters = [self.usgs_adapter, self.gdacs_adapter, self.wmo_cap_adapter]
+        for adapter, res in zip(adapters, results):
             if isinstance(res, list):
+                if adapter.health.is_mock_fallback:
+                    for event in res:
+                        for source in event.sources:
+                            if not source.provider.startswith("DEMO_"):
+                                source.provider = "DEMO_" + source.provider
                 all_events.extend(res)
             elif isinstance(res, Exception):
                 logger.error(f"Provider ingestion error: {res}")

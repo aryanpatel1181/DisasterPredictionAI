@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 const SESSION_ID_KEY = 'tg_session_id';
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = '';
 
 function getOrCreateSessionId(): string {
   if (typeof window === 'undefined') return '';

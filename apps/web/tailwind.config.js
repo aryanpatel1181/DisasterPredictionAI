@@ -1,4 +1,4 @@
-﻿/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
   content: [
@@ -9,37 +9,37 @@ module.exports = {
     extend: {
       colors: {
         ink: {
-          bg: '#0A0605',
-          surface: '#110C0A',
-          raised: '#18110E',
-          border: '#2A1D18',
-          'border-strong': '#3D2B23',
+          bg: '#080f12',
+          surface: '#0e181d',
+          raised: '#142127',
+          border: '#243339',
+          'border-strong': '#365047',
         },
         accent: {
-          DEFAULT: '#9D3715',
-          bright: '#C4501F',
-          deep: '#582F24',
+          DEFAULT: '#5dc9a9',
+          bright: '#a3edd0',
+          deep: '#215d4c',
         },
         content: {
-          primary: '#F4EDE9',
-          secondary: '#A49992',
-          tertiary: '#897973',
-          faint: '#6F605A',
+          primary: '#edf4f0',
+          secondary: '#a4b5ba',
+          tertiary: '#91a0a4',
+          faint: '#819095',
         },
         status: {
           critical: '#D4451E',
           warning: '#C98A2E',
-          watch: '#9D3715',
+          watch: '#5dc9a9',
           ok: '#5E8C61',
           info: '#7C8FA3',
         },
         // Legacy dark keys — remapped to the warm palette so existing
         // bg-dark-bg / bg-dark-card / border-dark-border usages keep working.
         dark: {
-          bg: '#0A0605',
-          card: '#110C0A',
-          border: '#2A1D18',
-          hover: '#18110E',
+          bg: '#080f12',
+          card: '#0e181d',
+          border: '#243339',
+          hover: '#142127',
         },
       },
       fontFamily: {

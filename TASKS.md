@@ -1,5 +1,12 @@
 # TerraGuard AI - Tasks Checklist
 
+## Portfolio refresh
+- [x] Responsive observatory, bundled basemap, search, filters, export and evidence panel.
+- [x] Same-origin API proxy, gateway rate limits, container configuration and dependency updates.
+- [x] Explicit synthetic research labels and source-health outage states.
+- [ ] Verify complete backend suite and production containers on Linux before public launch.
+- [ ] Replace synthetic hazard research inputs with measured datasets and validate forecasts.
+
 ## TODO
 - [ ] Add bathymetric wave propagation grid for tsunami arrival times (Milestone 3)
 - [ ] Expand country-specific Doppler radar plugin network for severe weather (Milestone 3)

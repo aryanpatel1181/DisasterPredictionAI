@@ -48,7 +48,7 @@ export default function ChatBot() {
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = '';
       const res = await fetch(`${apiUrl}/api/v1/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -98,11 +98,10 @@ export default function ChatBot() {
       >
         <MessageSquare className="h-5 w-5 text-ink-bg" />
         <span className="text-sm font-semibold text-ink-bg">Ask TerraGuard AI</span>
-        <span className="absolute inset-0 rounded animate-ping bg-accent/40" />
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-20 right-6 z-50 flex flex-col w-[380px] max-w-[calc(100vw-2rem)] glass-panel-elevated rounded-lg border border-ink-border shadow-raised overflow-hidden">
+        <div role="dialog" aria-label="TerraGuard assistant" className="fixed bottom-20 right-6 z-50 flex flex-col w-[420px] max-w-[calc(100vw-2rem)] max-h-[80vh] glass-panel-elevated rounded-lg border border-ink-border shadow-raised overflow-hidden">
           <div className="flex items-center justify-between px-4 py-3 border-b border-ink-border">
             <div className="flex items-center gap-2">
               <div className="relative flex h-2.5 w-2.5">
@@ -111,7 +110,8 @@ export default function ChatBot() {
               </div>
               <span className="text-sm font-semibold text-content-primary">TerraGuard AI</span>
             </div>
-            <button
+            <button disabled={loading} onClick={() => {setMessages([]);setConversationId(null);}} className="text-xs text-content-secondary">New chat</button>
+            <button aria-label="Close assistant"
               onClick={() => setIsOpen(false)}
               className="rounded p-1 text-content-secondary transition hover:bg-ink-raised hover:text-content-primary"
             >
@@ -147,7 +147,7 @@ export default function ChatBot() {
                       : 'glass-panel text-content-primary'
                   }`}
                 >
-                  {msg.content}
+                  <span className="whitespace-pre-wrap">{msg.content}</span>
                 </div>
               </div>
             ))}
@@ -165,6 +165,8 @@ export default function ChatBot() {
 
           <div className="flex items-center gap-2 px-4 py-3 border-t border-ink-border">
             <input
+              aria-label="Your message to TerraGuard"
+              maxLength={2000}
               type="text"
               value={input}
               onChange={e => setInput(e.target.value)}

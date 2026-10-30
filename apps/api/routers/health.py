@@ -26,7 +26,7 @@ async def health_check():
         "environment": settings.ENVIRONMENT,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "version": "v1.0.0",
-        "database": "connected",
-        "redis": "connected",
+        "database": "not_checked",
+        "redis": "not_checked",
         "ai_chat": ai_chat,
     }

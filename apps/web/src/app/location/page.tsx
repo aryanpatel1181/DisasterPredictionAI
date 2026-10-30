@@ -111,7 +111,7 @@ export default function LocationRiskPage() {
   const executeRiskComputation = async (latitude: number, longitude: number, locationName?: string) => {
     setLoading(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const apiUrl = '';
       const res = await fetch(`${apiUrl}/api/v1/location-risk?lat=${latitude}&lon=${longitude}`);
       if (!res.ok) throw new Error('API failed');
       const data = await res.json();

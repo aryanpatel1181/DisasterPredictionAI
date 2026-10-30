@@ -22,7 +22,7 @@ async def list_models():
                 "metrics": metrics,
                 "calibration_metrics": {"brier_score": metrics["brier_score"], "ece": metrics["calibration_ece"]},
                 "artifact_location": "./ml/registry/flood_xgboost_v1.bin",
-                "deployment_state": "PRODUCTION",
+                "deployment_state": "SYNTHETIC_RESEARCH_ONLY",
             }
         ]
     return models

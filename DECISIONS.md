@@ -22,3 +22,11 @@
 - **Context**: External feeds (USGS, GDACS, NASA GPM, GloFAS) can experience downtime, rate limits, or require authentication.
 - **Decision**: All external providers inherit from an abstract `BaseProviderAdapter` interface implementing retry decorators, backoff, health metrics (`last_success_timestamp`, `failure_count`, `latency_ms`), structured caching, and dev/mock data providers.
 - **Rationale**: Prevents hard coupling to any single vendor, guarantees zero platform downtime when external APIs fail, and allows full offline testing without API credentials.
+# Portfolio refresh decisions
+
+- Retain the existing Next.js/FastAPI monorepo and the user's AI configuration.
+- Serve browser API calls through a same-origin, allowlisted Next.js proxy; keep backend URLs private.
+- Use the bundled Natural Earth country geometry to avoid basemap tile availability or credential requirements.
+- Label synthetic model scenarios as research; no real-world accuracy claim follows from synthetic metrics.
+- Provide production Compose separately to preserve the local workflow.
+

@@ -1,111 +1,64 @@
-# TerraGuard AI 🌍⚡
+# TerraGuard AI
 
-> Autonomous, Global AI-Powered Natural-Disaster Intelligence, Forecasting, Risk-Assessment & Early-Warning Command Center.
+A full-stack environmental intelligence portfolio: explore global hazard records, inspect evidence, and discuss preparedness through an optional AI assistant.
 
-![License](https://img.shields.io/badge/License-MIT-blue.svg)
-![Python](https://img.shields.io/badge/Python-3.11+-green.svg)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg)
-![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)
-![MapLibre](https://img.shields.io/badge/MapLibre_GL-4.0+-blue.svg)
+## What you can demonstrate
 
----
+- Responsive observatory with an interactive MapLibre map, location search, category filters, and event evidence.
+- Separate observation and research views, plus filtered JSON export.
+- Source status with explicit unavailable and demo states.
+- FastAPI provider adapters, normalized schemas, two-minute ingestion cache, and source provenance.
+- Flood model experiments using synthetic training data, explicitly labelled as research.
+- Conversational assistant using a server-side OpenRouter integration, with a knowledge fallback.
+- A project notes page explaining architecture, limitations, and next engineering steps.
+- Weather Atlas at `/weather`: globe-to-city exploration, Open-Meteo current model conditions, location search, and illustrative rain, snow, cloud, fog, heat and clear-sky effects.
 
-## 📌 Executive Summary
+## Run locally
 
-**TerraGuard AI** is a production-grade, global decision-support engine designed to ingest near-real-time environmental telemetry, numerical weather predictions, seismic feeds, and satellite observations to compute calibrated probabilistic natural disaster risk assessments with transparent SHAP explanations.
+Requirements: Docker Desktop with its Linux engine running.
 
-### Supported Disaster Categories
-1. 🌊 **Flood Risk & River Inundation** (Milestone 2 - Multi-horizon forecasting)
-2. 🌋 **Earthquake Monitoring, Hazard & Aftershock Probability** (Live USGS/GDACS feeds)
-3. 🌊 **Tsunami Risk Evaluation** (Seismic & tectonic triggers + bathymetric context)
-4. 🌪️ **Severe Convective Weather** (CAPE, CIN, helicity, shear favorable conditions)
-5. 🌀 **Tropical Cyclones** (Track forecasts, maximum sustained winds, central pressure)
+From this repository, create a settings file only if one does not exist:
 
----
-
-## 🏗 Architecture Overview
-
-TerraGuard AI is structured as a high-performance monorepo:
-
-```
-.
-├── apps/
-│   ├── api/             # FastAPI Backend Service (REST, WebSockets, OpenAPI)
-│   └── web/             # Next.js 14 Command-Center Frontend (MapLibre GL, Recharts)
-├── services/
-│   ├── ingestion/       # Adapter network (USGS, GDACS, WMO/CAP, NASA GPM, GloFAS)
-│   ├── feature-engine/ # Geospatial & atmospheric feature processing pipeline
-│   ├── risk_engine/    # Probabilistic risk normalization & model execution
-│   ├── explanation-engine/ # Structured SHAP & deterministic explanation synthesis
-│   └── alert-engine/   # Official emergency warnings mapper (WMO CAP / GDACS)
-├── ml/                  # Disaster specific ML models, pipelines & model registry
-│   ├── flood/
-│   ├── earthquake/
-│   ├── tsunami/
-│   ├── severe-weather/
-│   └── cyclone/
-├── packages/
-│   ├── shared/          # Core models, validation rules & domain constants
-│   ├── schemas/         # Pydantic v2 & GeoJSON schema definitions
-│   └── geo/             # Spatial indexing, distance, clustering & bounding box math
-├── infrastructure/      # Docker Compose, PostGIS, Redis & Nginx deployment scripts
-└── docs/                # Comprehensive engineering and scientific documentation
+```powershell
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
+docker compose up --build
 ```
 
----
+Open http://localhost:3000. API documentation: http://localhost:8000/docs.
+The browser sends requests through Next.js; `API_INTERNAL_URL` points Next.js at FastAPI.
+For development without Docker, start FastAPI at port 8000 and run `npm run dev` from `apps/web`.
+The Weather Atlas uses Next.js server routes directly and does not require FastAPI. It uses the free, non-commercial Open-Meteo service; check provider terms before commercial deployment. City detail uses OpenStreetMap tiles; weather animation is not radar or live footage.
 
-## 🚀 Quickstart Guide
+## Verify
 
-### Prerequisites
-- Docker & Docker Compose (v2.20+)
-- Python 3.11+
-- Node.js 20+
-
-### Local Setup
-```bash
-# 1. Clone repository
-git clone https://github.com/terraguard-ai/terraguard.git
-cd terraguard
-
-# 2. Copy environment template
-cp .env.example .env
-
-# 3. Spin up full Docker stack (Database, Redis, API, Frontend, Ingestion Workers)
-docker compose up -d
-
-# Access services:
-# Web Dashboard: http://localhost:3000
-# OpenAPI Specs: http://localhost:8000/docs
-# Health Endpoint: http://localhost:8000/api/v1/health
+```powershell
+cd apps/web
+npm ci
+npm test
+npm run build
+npm audit
 ```
 
----
+Backend checks: `python -m pytest -q` from the repository root after installing `requirements.txt`.
+Browser smoke checks: start the frontend on port 3001, install the root npm dependencies, create `work/`, then run `node tests/browser-smoke.cjs`. Browser tests use labelled fixtures and do not verify live providers.
 
-## 🧪 Running Tests
+## Deployment
 
-```bash
-# Run backend pytest suite (unit, integration, adapters, geospatial)
-pytest
+Use [the deployment guide](docs/DEPLOYMENT.md). A separate production Compose file includes a rate-limited gateway, private API/database/Redis services, persistent PostGIS storage, and the production Next.js build.
 
-# Run frontend vitest suite
-cd apps/web && npm test
+## Scientific scope
+
+This is an experimental portfolio project. Synthetic model metrics are not evidence of real-world forecasting accuracy. Existing research and location-risk routines are demonstrations; live flood, cyclone, and aftershock forecasts are not validated. Provider fallback records are labelled as sample data. The assistant does not have a verified 14-day weather integration in this checkout.
+
+Earthquake monitoring describes recorded events; exact future earthquake time, location, and magnitude are not predicted. Follow official local emergency guidance.
+
+## Architecture
+
+```text
+Browser → Next.js same-origin API proxy → FastAPI → provider adapters
+           MapLibre / React               schema + provenance
+           evidence + export              ingestion cache
+                                         synthetic ML research
 ```
 
----
-
-## 📜 Documentation Index
-
-- [Architecture Overview](docs/ARCHITECTURE.md)
-- [Data Source Adapters](docs/DATA_SOURCES.md)
-- [Machine Learning & Risk Pipeline](docs/ML.md)
-- [REST & WebSocket API Specs](docs/API.md)
-- [Deployment Guide](docs/DEPLOYMENT.md)
-- [Security & Compliance](docs/SECURITY.md)
-- [System Limitations](docs/LIMITATIONS.md)
-- [Scientific Integrity Guidelines](docs/SCIENTIFIC_INTEGRITY.md)
-
----
-
-## ⚖️ Scientific Integrity Notice
-
-TerraGuard AI is an **experimental decision-support platform** and NOT a substitute for national emergency management authorities. Earthquake forecasting capability focuses strictly on live monitoring, aftershock statistical probability, population exposure, and shaking estimates. **Deterministic prediction of exact earthquake timing and magnitude is scientifically impossible and never claimed.**
+See `docs/` for additional architecture notes. Earlier milestone documents describe intended architecture and may include features still awaiting validation.

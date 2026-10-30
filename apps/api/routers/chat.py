@@ -1,4 +1,3 @@
-import os
 import uuid
 
 import httpx
@@ -6,10 +5,9 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
 from apps.api.routers.events import get_or_refresh_events
+from packages.shared.config import settings
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-# Prefer a free OpenRouter model by default to avoid paid API usage.
-DEFAULT_MODEL = "deepseek/deepseek-r1:free"
 
 ADVISORY = (
     "Experimental decision-support output. TerraGuard AI is not a substitute for "
@@ -208,11 +206,11 @@ def rule_based_reply(message: str, event_context: str = "") -> str:
 
 
 async def ask_openrouter(message: str, history: list, event_context: str = "") -> str | None:
-    key = os.getenv("OPENROUTER_API_KEY")
+    key = settings.OPENROUTER_API_KEY
     if not key:
         return None
 
-    model = os.getenv("OPENROUTER_MODEL", DEFAULT_MODEL)
+    model = settings.OPENROUTER_MODEL
     contextual_message = message
     if event_context:
         contextual_message = (
@@ -261,7 +259,7 @@ async def chat(request: ChatRequest) -> ChatResponse:
     event_context = await build_event_context(request.message)
     text = await ask_openrouter(request.message, history, event_context)
     if text:
-        model = os.getenv("OPENROUTER_MODEL", DEFAULT_MODEL)
+        model = settings.OPENROUTER_MODEL
         sources = [f"OpenRouter LLM ({model})"]
     else:
         text = rule_based_reply(request.message, event_context)

@@ -1,4 +1,6 @@
 from typing import List, Optional
+import asyncio
+import time
 from fastapi import APIRouter, Query, HTTPException
 from services.ingestion.ingestion_manager import ingestion_manager
 from services.risk_engine.predictive_pipeline import predictor
@@ -8,8 +10,19 @@ from packages.geo.spatial import cluster_points, is_point_in_bbox
 router = APIRouter(prefix="/api/v1", tags=["Hazard Events"])
 
 _cached_events: List[NormalizedHazardEvent] = []
+_cache_time = 0.0
+_cache_lock = asyncio.Lock()
 
 async def get_or_refresh_events() -> List[NormalizedHazardEvent]:
+    global _cache_time
+    async with _cache_lock:
+        if _cache_time and time.monotonic() - _cache_time < 120:
+            return _cached_events
+        result = await _refresh_events()
+        _cache_time = time.monotonic()
+        return result
+
+async def _refresh_events() -> List[NormalizedHazardEvent]:
     global _cached_events
     # Fetch live telemetry observations & official alerts
     obs_events = await ingestion_manager.fetch_all_events()

@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     LOG_LEVEL: str = "INFO"
     SECRET_KEY: str = "terraguard_secret_key_change_in_production_32bytes"
+    # Same server-only value on the API and Next.js for split hosting.
+    API_PROXY_TOKEN: str = ""
     
     PORT: int = 8000
     HOST: str = "0.0.0.0"
@@ -32,6 +34,6 @@ class Settings(BaseSettings):
     MODEL_REGISTRY_PATH: str = "./ml/registry"
 
     OPENROUTER_API_KEY: str = ""
-    OPENROUTER_MODEL: str = "deepseek/deepseek-r1:free"
+    OPENROUTER_MODEL: str = "openrouter/free"
 
 settings = Settings()

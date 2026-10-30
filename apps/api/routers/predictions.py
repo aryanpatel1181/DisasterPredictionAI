@@ -1,5 +1,5 @@
 from typing import List, Optional
-from fastapi import APIRouter, Query, BackgroundTasks
+from fastapi import APIRouter, Query, BackgroundTasks, HTTPException
 from services.risk_engine.predictive_pipeline import predictor
 from packages.schemas.hazard import NormalizedHazardEvent
 
@@ -24,12 +24,13 @@ async def get_upcoming_predictions(
 
     return {
         "prediction_count": len(predictions),
-        "status": "ACTIVE_AI_PREDICTIONS",
+        "status": "SYNTHETIC_RESEARCH_ONLY",
         "predictions": [p.model_dump() for p in predictions],
     }
 
 @router.post("/predictions/train", summary="Train Disaster Models on Live Telemetry & Re-run Inference")
 async def train_and_run_predictions():
+    raise HTTPException(status_code=403, detail="Training is an offline development operation.")
     """Triggers ML model retraining on latest online hydro-meteorological data and updates AI risk estimates."""
     predictor._ensure_models_trained()
     new_preds = predictor.generate_upcoming_disaster_predictions()
